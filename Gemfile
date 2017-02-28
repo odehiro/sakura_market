@@ -14,6 +14,12 @@ gem 'bootstrap-sass', '3.3.6'
 group :development, :test do
   gem 'sqlite3', '1.3.11'
   gem 'byebug', '9.0.0', platform: :mri
+  gem 'rspec-rails'
+  gem 'rspec-core'
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'factory_girl_rails'
+  gem 'capybara'
 end
 
 group :development do
