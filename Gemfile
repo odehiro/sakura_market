@@ -20,7 +20,6 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'factory_girl_rails'
-  gem 'capybara'
 end
 
 group :development do
@@ -28,4 +27,9 @@ group :development do
   gem 'listen', '3.0.8'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'selenium-webdriver'
+  gem 'capybara'
 end
