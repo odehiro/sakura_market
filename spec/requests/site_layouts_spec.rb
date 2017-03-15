@@ -10,7 +10,12 @@ RSpec.describe "SiteLayouts", type: :request do
       expect(page).to have_link '日記を見る'
       expect(page).to have_link 'お買い物'
       expect(page).to have_link 'ショッピングカート'
-      expect(page).to have_link 'ログアウト'
+      expect(page).to have_link 'ログイン'
+    end
+
+    it "layout loggedin" do
+      visit root_path
+      #expect(page).to have_link 'ログアウト'
     end
   end
 end

@@ -8,5 +8,11 @@
           %li= link_to "日記を見る", '#'
           %li= link_to "お買い物", '#'
           %li= link_to "ショッピングカート", '#'
-        %ul.nav.navbar-nav.navbar-right
-          %li= link_to "ログアウト", '#'
+
+        - if user_signed_in?
+          %ul.nav.navbar-nav.navbar-right
+            %li= link_to "ログアウト", destroy_user_session_path, method: :delete
+        - else
+          %ul.nav.navbar-nav.navbar-right
+            %li= link_to "ログイン", new_user_session_path
+
