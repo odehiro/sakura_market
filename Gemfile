@@ -11,6 +11,7 @@ gem 'jbuilder', '2.4.1'
 gem 'haml-rails'
 gem 'bootstrap-sass', '3.3.6'
 gem 'devise'
+gem 'devise-i18n'
 
 group :development, :test do
   gem 'sqlite3', '1.3.11'
