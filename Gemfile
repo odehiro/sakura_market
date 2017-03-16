@@ -18,6 +18,7 @@ group :development, :test do
   gem 'byebug', '9.0.0', platform: :mri
   gem 'rspec-rails'
   gem 'rspec-core'
+  gem 'spork'
   gem 'guard'
   gem 'guard-rspec'
   gem 'factory_girl_rails'
