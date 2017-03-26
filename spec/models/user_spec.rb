@@ -11,17 +11,20 @@ RSpec.describe User, type: :model do
   before { @user = User.new(
     #name: "Example User", 
     email: "user@example.com",
+    password: "foobar",
+    password_confirmation: "foobar"
     #encrypted_password: Devise::Encryptor.digest(User, 'password')
   ) }
+
   subject { @user }
   
   #it { should respond_to(:name) }
   it { should respond_to(:email) }
 
-  #it { should be_valid }
+  it { should be_valid }
 
-  #describe "when email is not present" do
-  #  before { @user.email = "" }
-  #  it { should_not be_valid }
-  #end
+  describe "when email is not present" do
+    before { @user.email = " " }
+    it { should_not be_valid }
+  end
 end
