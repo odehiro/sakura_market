@@ -12,6 +12,7 @@ gem 'haml-rails'
 gem 'bootstrap-sass', '3.3.6'
 gem 'devise'
 gem 'devise-i18n'
+gem 'rails-i18n'
 
 group :development, :test do
   gem 'sqlite3', '1.3.11'
@@ -21,7 +22,6 @@ group :development, :test do
   gem 'spork'
   gem 'guard'
   gem 'guard-rspec'
-  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -32,6 +32,7 @@ group :development do
 end
 
 group :test do
+  gem 'factory_girl_rails'
   gem 'selenium-webdriver'
   gem 'capybara'
 end
