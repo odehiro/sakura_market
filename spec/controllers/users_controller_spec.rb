@@ -10,9 +10,9 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET #show" do
-    it "returns http success" do
+    it "ログイン前ならばエラーeturns http success" do
       get :show
-      expect(response).to have_http_status(:success)
+      expect(response).not_to have_http_status(:success)
     end
   end
 
