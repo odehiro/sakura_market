@@ -1,11 +1,5 @@
-%h1 Users#show
-%p Find me in app/views/users/show.html.haml
-
-- if user_signed_in?
-  = current_user.id
-  %p email
-  = current_user.email
-  %p created_at
-  = current_user.created_at
-  %br
-  = current_user.updated_at
+.row
+  %aside.span4
+    %section
+      - if user_signed_in?
+        = render 'shared/user_info'
