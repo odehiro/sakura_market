@@ -2,13 +2,20 @@ require 'rails_helper'
 
 RSpec.describe "IndexPages", type: :request do
   describe "GET /index_pages" do
-    before do
-      visit root_path
+    before { visit root_path }
+    subject { page }
+
+    describe "項目確認" do
+      it { should have_http_status(200) }
+      it { should have_link("サインイン") }
     end
 
-    it "表示確認" do
-      expect(page).to have_http_status(200)
-      expect(page).to have_content("サインイン")
+    describe "ヘッダー項目" do
+      it { should have_link("さくらマーケット", href: root_path) }
+      it { should_not have_link("日記を見る") }
+      it { should_not have_link("お買い物") }
+      it { should_not have_link("ショッピングカート") }
+      it { should have_link("ログイン", href: new_user_session_path) }
     end
 
     it "サインインボタンクリック" do
