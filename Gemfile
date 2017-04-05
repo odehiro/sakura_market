@@ -35,4 +35,5 @@ group :test do
   gem 'factory_girl_rails'
   gem 'selenium-webdriver'
   gem 'capybara'
+  gem 'rails-controller-testing', require: false
 end

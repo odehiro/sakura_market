@@ -57,6 +57,16 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
 
+  # Raisl5対応
+  RSpec.configure do |config|
+    require 'rails-controller-testing'
+    [:controller, :view, :request].each do |type|
+      config.include ::Rails::Controller::Testing::TestProcess, :type => type
+      config.include ::Rails::Controller::Testing::TemplateAssertions, :type => type
+      config.include ::Rails::Controller::Testing::Integration, :type => type
+    end
+  end
+
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
