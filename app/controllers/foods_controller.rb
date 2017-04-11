@@ -15,6 +15,7 @@ class FoodsController < ApplicationController
   # GET /foods/new
   def new
     @food = Food.new
+    @food.display = true
   end
 
   # GET /foods/1/edit
@@ -28,7 +29,8 @@ class FoodsController < ApplicationController
 
     respond_to do |format|
       if @food.save
-        format.html { redirect_to @food, notice: 'Food was successfully created.' }
+        #format.html { redirect_to @food, notice: 'Food was successfully created.' }
+        format.html { redirect_to @food, notice: '商品を登録しました。' }
         format.json { render :show, status: :created, location: @food }
       else
         format.html { render :new }

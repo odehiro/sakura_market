@@ -1,0 +1,14 @@
+ja:
+  activerecord:
+    models:
+      food: 商品
+ja:
+  activerecord:
+    attributes:
+      food:
+        name: 商品名
+        image: 商品画像
+        price: 価格
+        caption: 商品説明
+        display: 表示
+        order: 並び順
