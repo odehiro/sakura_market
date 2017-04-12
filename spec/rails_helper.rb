@@ -5,6 +5,9 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
+require 'capybara'
+require 'capybara/rspec'
+require 'capybara/poltergeist'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -66,6 +69,11 @@ RSpec.configure do |config|
       config.include ::Rails::Controller::Testing::Integration, :type => type
     end
   end
+
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, :inspector => true)
+  end
+  Capybara.javascript_driver = :poltergeist
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!

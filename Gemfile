@@ -33,7 +33,8 @@ end
 
 group :test do
   gem 'factory_girl_rails'
-  gem 'selenium-webdriver'
   gem 'capybara'
+  gem 'poltergeist'
+  gem 'launchy'
   gem 'rails-controller-testing', require: false
 end
