@@ -1,9 +1,8 @@
 !!! 5
-%html
 %html{ lang: "ja" }
   %head
-    %title SakuraMarket
     %meta{ charset: "utf-8" }
+    %title= full_title(yield(:title))
     = csrf_meta_tags
 
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
