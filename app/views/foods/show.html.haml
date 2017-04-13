@@ -3,24 +3,24 @@
 %p#notice= notice
 
 %p
-  %b Name:
+  %b= t('activerecord.attributes.food.name')
   = @food.name
 %p
-  %b Image:
+  %b= t('activerecord.attributes.food.image')
   = image_tag image_food_path(@food)
 %p
-  %b Price:
+  %b= t('activerecord.attributes.food.price')
   = @food.price
 %p
-  %b Caption:
+  %b= t('activerecord.attributes.food.caption')
   = @food.caption
 %p
-  %b Display:
+  %b= t('activerecord.attributes.food.display')
   = @food.display
 %p
-  %b Order:
+  %b= t('activerecord.attributes.food.order')
   = @food.order
 
-= link_to 'Edit', edit_food_path(@food)
+= link_to '編　集', edit_food_path(@food)
 \|
-= link_to 'Back', foods_path
+= link_to '戻　る', foods_path

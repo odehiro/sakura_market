@@ -29,6 +29,13 @@ RSpec.describe "Foods", type: :request do
     end
   end
 
+  describe "food#show" do
+    let(:food) { FactoryGirl.create(:food) }
+    before { visit food_path(food) }
+
+    it { expect(page).to have_http_status(200) }
+  end
+
   describe "edit/update" do
     subject { page }
     let(:food) { FactoryGirl.create(:food) }
@@ -59,7 +66,7 @@ RSpec.describe "Foods", type: :request do
       it { is_expected.to have_content new_name }
       it { is_expected.to have_content new_price }
       it { is_expected.to have_content 'みずみずしい大根' }
-      it { is_expected.to have_content 'Display: true' }
+      it { is_expected.to have_content '表示 true' }
 
       specify { expect(food.reload.name).to eq new_name }
       specify { expect(food.reload.price).to eq new_price }
