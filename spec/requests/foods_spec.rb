@@ -25,15 +25,47 @@ RSpec.describe "Foods", type: :request do
       fill_in '並び順', with: ''
       expect { click_on '登　録' }.to change(Food, :count).by(1)
       expect(page).to have_content '登録しました。'
-      #expect(current_path).to eq show_food_path
+      expect(current_path).to eq food_path(id: 1)
     end
   end
 
   describe "edit/update" do
-    it "" do
-      visit foods_path
-      expect(page).to have_http_status(200)
+    subject { page }
+    let(:food) { FactoryGirl.create(:food) }
+    before { visit edit_food_path(food) }
+
+    describe "page" do
+      scenario "表示項目" do
+        #save_and_open_page
+        is_expected.to have_content "商品情報　更新"
+        is_expected.to have_field('商品名', with: 'だいこん')
+        is_expected.to have_field('価格', with: 200)
+        is_expected.to have_field('商品説明', with: 'みずみずしい大根')
+        is_expected.to have_checked_field('表示')
+        is_expected.to have_link "Show"
+      end
     end
+
+    describe "with valid information" do
+      let(:new_name) { "New Name" }
+      let(:new_price) { 1500 }
+      before do
+        fill_in "商品名", with: new_name
+        fill_in "価格", with: new_price
+
+        click_button "更　新"
+      end
+
+      it { is_expected.to have_content new_name }
+      it { is_expected.to have_content new_price }
+      it { is_expected.to have_content 'みずみずしい大根' }
+      it { is_expected.to have_content 'Display: true' }
+
+      specify { expect(food.reload.name).to eq new_name }
+      specify { expect(food.reload.price).to eq new_price }
+    end
+      
+      #expect(page).to have_http_status(200)
   end
 
   describe "delete" do

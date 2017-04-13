@@ -22,8 +22,6 @@ class FoodsController < ApplicationController
   def edit
   end
 
-  # POST /foods
-  # POST /foods.json
   def create
     @food = Food.new(food_params)
 
@@ -39,12 +37,10 @@ class FoodsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /foods/1
-  # PATCH/PUT /foods/1.json
   def update
     respond_to do |format|
       if @food.update(food_params)
-        format.html { redirect_to @food, notice: 'Food was successfully updated.' }
+        format.html { redirect_to @food, notice: '商品情報を更新しました。' }
         format.json { render :show, status: :ok, location: @food }
       else
         format.html { render :edit }
