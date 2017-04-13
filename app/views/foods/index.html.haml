@@ -1,16 +1,16 @@
 - provide(:title, "商品一覧")
 
-%h1 Listing foods
+%h1 商品一覧
 
 %table
   %thead
     %tr
-      %th Name
-      %th Image
-      %th Price
-      %th Caption
-      %th Display
-      %th Order
+      %th 商品名
+      %th 商品画像
+      %th 価格
+      %th 商品説明
+      %th 表示
+      %th 並び順
       %th
       %th
       %th
@@ -19,15 +19,16 @@
     - @foods.each do |food|
       %tr
         %td= food.name
-        %td= food.image
+        %td= image_tag image_food_path(food)
         %td= food.price
         %td= food.caption
         %td= food.display
         %td= food.order
-        %td= link_to 'Show', food
-        %td= link_to 'Edit', edit_food_path(food)
-        %td= link_to 'Destroy', food, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= link_to '表示', food
+        %td= link_to '編集', edit_food_path(food)
+        %td= link_to '削除', food, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
-= link_to 'New Food', new_food_path
+= link_to '新規登録', new_food_path
+
