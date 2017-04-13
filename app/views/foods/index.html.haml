@@ -26,7 +26,7 @@
         %td= food.order
         %td= link_to '表示', food
         %td= link_to '編集', edit_food_path(food)
-        %td= link_to '削除', food, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= link_to '削除', food, method: :delete, data: { confirm: '削除して宜しいですか？' }
 
 %br
 

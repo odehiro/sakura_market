@@ -71,15 +71,25 @@ RSpec.describe "Foods", type: :request do
       specify { expect(food.reload.name).to eq new_name }
       specify { expect(food.reload.price).to eq new_price }
     end
-      
-      #expect(page).to have_http_status(200)
   end
 
   describe "delete" do
-    it "" do
-      visit foods_path
-      expect(page).to have_http_status(200)
+    subject { page }
+
+    describe "should be able to delete another food" do
+      let(:food) { FactoryGirl.create(:food) }
+      before do
+        food.reload
+        visit foods_path
+      end
+
+      it "food destroy" do
+        expect(page).to have_http_status(200) 
+        is_expected.to have_link "削除"
+        expect { click_link '削除', match: :first }.to change(Food, :count).by(-1)
+        expect(page).to have_content '商品を削除しました。'
+        expect(current_path).to eq foods_path
+      end
     end
   end
-
 end
