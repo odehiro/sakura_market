@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root 'users#index'
-  get 'users/show'
+  root 'home#index'
+  get 'home/show'
   devise_for :users
-  resources :users, :only => [:index, :show]
+  resources :users
   resources :foods do
     member { get :image }
   end
