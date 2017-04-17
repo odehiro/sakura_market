@@ -48,15 +48,24 @@ RSpec.describe "Home", type: :request do
 
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
+      let(:food) { FactoryGirl.create(:food) }
       before do
+        food.reload
         fill_in 'メールアドレス', with: user.email
         fill_in 'パスワード', with: user.password
         click_button 'ログイン'
       end
 
       it "ログイン成功してトップページへ遷移していること" do
-        is_expected.to have_http_status(200)
+        is_expected.to have_http_status(:success)
         expect(current_path).to eq home_show_path
+      end
+
+      it "商品一覧が表示されていること" do
+        #save_and_open_page
+        is_expected.to have_content food.name
+        is_expected.to have_content food.price
+        is_expected.to have_content food.caption
       end
     end
   end

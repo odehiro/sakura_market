@@ -6,14 +6,34 @@
       - if user_signed_in?
         = render 'shared/user_info'
   .col-md-8
-    
-    -#
-      <%= render 'follow_form' if logged_in? %>
-      <% if @user.microposts.any? %>
-        <h3>Microposts (<%= @user.microposts.count %>)</h3>
-        <ol class="microposts">
-          <%= render @microposts %>
-        </ol>
-        <%= will_paginate @microposts %>
-      <% end %>
+    %h2 商品一覧
+    %table
+      %thead
+        %tr
+          %th 商品名
+          %th 商品画像
+          %th 価格
+          %th 商品説明
+
+          %th
+          %th
+          %th
+
+      %tbody
+        - @foods.each do |food|
+          %tr
+            %td= food.name
+            %td= image_tag image_food_path(food)
+            %td= food.price
+            %td= food.caption
+            %td= food.display
+            %td= food.order
+
+            %td= link_to '表示', food
+            %td= link_to '編集', edit_food_path(food)
+            %td= link_to '削除', food, method: :delete, data: { confirm: '削除して宜しいですか？' }
+
+    %br
+
+    = link_to '新規登録', new_food_path
 
