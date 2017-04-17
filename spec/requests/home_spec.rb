@@ -25,11 +25,39 @@ RSpec.describe "Home", type: :request do
   end
 
   describe "signup" do
-  #  before { visit new_user_registration_path }
   #  let(:submit) { "" }
 
-  #  if "should not create a user" do
+  #  it "should not create a user" do
   #    expect { click_button submit }.not_to change(User, :count)
   #  end
+  end
+
+  describe "login" do
+    subject { page }
+    before do
+      visit new_user_session_path
+    end
+
+    describe "with invalid information" do
+      before { click_button "ログイン" }
+      
+      it { is_expected.to have_http_status(200) }
+      it { is_expected.to have_title('ログイン') }
+      it { is_expected.to have_selector('p.alert') }
+    end
+
+    describe "with valid information" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード', with: user.password
+        click_button 'ログイン'
+      end
+
+      it "ログイン成功してトップページへ遷移していること" do
+        is_expected.to have_http_status(200)
+        expect(current_path).to eq home_show_path
+      end
+    end
   end
 end

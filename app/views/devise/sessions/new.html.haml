@@ -1,4 +1,6 @@
-%h2 Log in
+- provide(:title, "ログイン")
+
+%h2 ログイン
 
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| 
   .field
@@ -17,6 +19,6 @@
       = f.label :remember_me
 
   .actions
-    = f.submit "Log in"
+    = f.submit "ログイン"
 
 = render 'devise/shared/links'
