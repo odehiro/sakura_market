@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Home", type: :request do
+  subject { page }
+
   describe "GET /index_pages" do
     before { visit root_path }
-    subject { page }
 
     describe "項目確認" do
       it { should have_http_status(200) }
@@ -33,10 +34,7 @@ RSpec.describe "Home", type: :request do
   end
 
   describe "login" do
-    subject { page }
-    before do
-      visit new_user_session_path
-    end
+    before { visit new_user_session_path }
 
     describe "with invalid information" do
       before { click_button "ログイン" }
