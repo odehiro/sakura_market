@@ -7,4 +7,14 @@ FactoryGirl.define do
     display true
     order ""
   end
+  
+  factory :food2, class: Food do
+    name "キャベツ"
+    image ""
+    price 100
+    caption "新鮮なのでシャッキシャキ！！"
+    display true
+    order ""
+  end
+
 end

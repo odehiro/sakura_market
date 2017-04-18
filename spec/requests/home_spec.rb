@@ -47,8 +47,11 @@ RSpec.describe "Home", type: :request do
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
       let(:food) { FactoryGirl.create(:food) }
+      let(:food2) { FactoryGirl.create(:food2) }
+
       before do
         food.reload
+        food2.reload
         fill_in 'メールアドレス', with: user.email
         fill_in 'パスワード', with: user.password
         click_button 'ログイン'
@@ -61,9 +64,12 @@ RSpec.describe "Home", type: :request do
 
       it "商品一覧が表示されていること" do
         #save_and_open_page
-        is_expected.to have_content food.name
-        is_expected.to have_content food.price
-        is_expected.to have_content food.caption
+        is_expected.to have_link food.name
+        #is_expected.to have_css("img[src='']")
+        is_expected.not_to have_content food.price
+        is_expected.not_to have_content food.caption
+
+        is_expected.to have_link food2.name
       end
     end
   end

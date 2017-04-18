@@ -1,39 +1,19 @@
 - provide(:title, "#{current_user.email}")
 
 .row
-  %aside.col-md-4
+  %aside.col-md-3
     %section.user_info
       - if user_signed_in?
         = render 'shared/user_info'
-  .col-md-8
+  .col-md-9
     %h2 商品一覧
-    %table
-      %thead
-        %tr
-          %th 商品名
-          %th 商品画像
-          %th 価格
-          %th 商品説明
+    .row.row-flex.row-flex-wrap
+      - @foods.each do |food|
+        .col-md-4
+          .thumbnail
+            = image_tag image_food_path(food)
+            .caption
+            = link_to food.name, food_path(food)
 
-          %th
-          %th
-          %th
-
-      %tbody
-        - @foods.each do |food|
-          %tr
-            %td= food.name
-            %td= image_tag image_food_path(food)
-            %td= food.price
-            %td= food.caption
-            %td= food.display
-            %td= food.order
-
-            %td= link_to '表示', food
-            %td= link_to '編集', edit_food_path(food)
-            %td= link_to '削除', food, method: :delete, data: { confirm: '削除して宜しいですか？' }
-
-    %br
-
-    = link_to '新規登録', new_food_path
+  = link_to '新規登録', new_food_path
 
