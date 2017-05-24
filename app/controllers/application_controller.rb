@@ -7,8 +7,16 @@ class ApplicationController < ActionController::Base
     home_show_path
   end
 
-  private 
+  private
     def sign_in_required
       redirect_to new_user_session_url unless user_signed_in?
+    end
+    
+    def current_cart
+      Cart.find(session[:cart_id])
+    rescue ActiveRecord::RecordNotFound
+      cart = Cart.create
+      session[:cart_id] = cart.id
+      cart
     end
 end
