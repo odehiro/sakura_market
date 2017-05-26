@@ -50,11 +50,16 @@ class FoodsController < ApplicationController
   end
 
   def destroy
-    @food.destroy
-    respond_to do |format|
-      format.html { redirect_to foods_url, notice: '商品を削除しました。' }
-      format.json { head :no_content }
+    if @food.destroy
+      redirect_to foods_url, notice: '商品を削除しました。'
+    else
+      redirect_to foods_url, alert: @food.errors[:base]
     end
+
+    #respond_to do |format|
+    #  format.html { redirect_to foods_url, notice: '商品を削除しました。' }
+    #  format.json { head :no_content }
+    #end
   end
 
   def image

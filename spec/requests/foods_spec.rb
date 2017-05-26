@@ -73,22 +73,45 @@ RSpec.describe "Foods", type: :request do
     end
   end
 
-  describe "delete" do
-    subject { page }
-
-    describe "should be able to delete another food" do
+  feature "delete" do
+    feature "should be able to delete another food" do
+      subject { page }
       let(:food) { FactoryGirl.create(:food) }
-      before do
+
+      background do
         food.reload
         visit foods_path
       end
 
-      it "food destroy" do
+      scenario "food destroy" do
         expect(page).to have_http_status(200) 
         is_expected.to have_link "削除"
         expect { click_link '削除', match: :first }.to change(Food, :count).by(-1)
         expect(page).to have_content '商品を削除しました。'
         expect(current_path).to eq foods_path
+      end
+    end
+
+    context "削除対象がカートに入っている場合" do
+      feature "対象food削除" do
+        subject { page }
+        let(:food) { FactoryGirl.create(:food) }
+        let(:cart) { FactoryGirl.create(:cart_valid) }
+        let(:line) { FactoryGirl.create(:line_item) }
+
+        background do
+          food.reload
+          cart.reload
+          line.reload
+          visit foods_path
+        end
+
+        scenario "削除でエラーが出ること" do
+          is_expected.to have_link "削除"
+          expect { click_link '削除', match: :first }.not_to change(Food, :count)
+          expect(page).to have_content '品目が存在します'
+          expect(current_path).to eq foods_path
+        end
       end
     end
   end
