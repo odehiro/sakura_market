@@ -21,10 +21,12 @@ class LineItemsController < ApplicationController
   def edit
   end
 
-  # POST /line_items
-  # POST /line_items.json
   def create
-    @line_item = LineItem.new(line_item_params)
+    @cart = current_cart
+    #food = Food.find(line_item_params.food_id)
+    food = Food.find(params[:food_id])
+    #@line_item = LineItem.new(line_item_params)
+    @line_item = @cart.line_items.build(food: food)
 
     respond_to do |format|
       if @line_item.save

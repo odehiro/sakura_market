@@ -1,10 +1,25 @@
 require 'rails_helper'
 
-RSpec.describe "Carts", type: :request do
-  describe "GET /carts" do
-    it "works! (now write some real specs)" do
-      get carts_path
-      expect(response).to have_http_status(200)
+RSpec.feature "Carts", type: :request do
+  feature "GET /carts" do
+    scenario "works! (now write some real specs)" do
+      visit carts_path
+      expect(page).to have_http_status(200)
+    end
+  end
+
+  feature "カートに入れる" do
+    given(:food) { FactoryGirl.create(:food) }
+
+    background do
+      food.reload
+    end
+
+    scenario "カートに商品が入ること" do
+      visit foods_path
+      expect(page).to have_http_status(200)
+      expect(page).to have_link 'カートに入れる'
+      expect { click_link 'カートに入れる', match: :first }.to change(LineItem, :count).by(+1)
     end
   end
 end
