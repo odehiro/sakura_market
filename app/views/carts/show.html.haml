@@ -4,4 +4,4 @@
 %h2 カート
 %ul
   - @cart.line_items.each do |item|
-    %li= item.food.name
+    %li= "#{item.food.name} #{item.quantity}個"
