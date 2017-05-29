@@ -2,6 +2,12 @@
   %p#notice= notice
 
 %h2 カート
-%ul
+%table
   - @cart.line_items.each do |item|
-    %li= "#{item.food.name} #{item.quantity}個"
+    %tr
+      %td= item.food.name
+      %td= "#{item.quantity}個"
+      %td= number_to_currency(item.total_price)
+  %tr.total_line
+    %td{colspan: 2} 合計
+    %td.total_cell= number_to_currency(@cart.total_price)
