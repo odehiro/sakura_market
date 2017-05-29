@@ -23,10 +23,8 @@ class LineItemsController < ApplicationController
 
   def create
     @cart = current_cart
-    #food = Food.find(line_item_params.food_id)
     food = Food.find(params[:food_id])
-    #@line_item = LineItem.new(line_item_params)
-    @line_item = @cart.line_items.build(food: food)
+    @line_item = @cart.add_food(food.id)
 
     respond_to do |format|
       if @line_item.save
