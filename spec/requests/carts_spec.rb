@@ -20,6 +20,7 @@ RSpec.feature "Carts", type: :request do
       expect(page).to have_http_status(200)
       expect(page).to have_link 'カートに入れる'
       expect { click_link 'カートに入れる', match: :first }.to change(LineItem, :count).by(+1)
+      expect(current_path).to eq cart_path(1)
     end
   end
 end
