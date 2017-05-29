@@ -7,8 +7,6 @@ class CartsController < ApplicationController
     @carts = Cart.all
   end
 
-  # GET /carts/1
-  # GET /carts/1.json
   def show
   end
 
@@ -62,9 +60,19 @@ class CartsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_cart
-      @cart = Cart.find(params[:id])
+      begin
+        @cart = Cart.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        logger.error "無効なカート#{params[:id]}にアクセスしようとしました"
+        redirect_to root_url, notice: '無効なカートです'
+      else
+        respond_to do |format|
+          format.html
+          format.json { render json: @cart }
+        end
+      end
+      #@cart = Cart.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
