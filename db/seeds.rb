@@ -1,4 +1,24 @@
 # coding: utf-8
+User.create(
+  name: "Example User", 
+  email: "user@example.com",
+  password: "foobar",
+  password_confirmation: "foobar"
+)
+User.create(
+  name: "Administrator", 
+  email: "admin@example.com",
+  password: "foobar",
+  password_confirmation: "foobar",
+  admin: true
+)
+User.create(
+  name: "西出 宏和", 
+  email: "nishide.h@gmail.com",
+  password: "foobar",
+  password_confirmation: "foobar",
+  admin: true
+)
 
 Food.create(name: "さくらんぼ",
             image: "",
