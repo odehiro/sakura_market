@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
     def sign_in_required
       redirect_to new_user_session_url unless user_signed_in?
     end
-    
+
+    def admin_required
+      redirect_to home_show_url unless current_user.admin?
+    end
+   
     def current_cart
       Cart.find(session[:cart_id])
     rescue ActiveRecord::RecordNotFound

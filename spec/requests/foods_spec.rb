@@ -1,47 +1,89 @@
 require 'rails_helper'
 
-RSpec.describe "Foods", type: :request do
-  # TODO:権限によるテスト
-  before do
-    User.create(email: 'foo@example.com', password: 'foobar')
-  end
+RSpec.feature "Foods", type: :request do
+  subject { page }
 
-  describe "GET /foods" do
-    it "works! (now write some real specs)" do
-      visit foods_path
-      expect(page).to have_http_status(200)
+  given(:user) { FactoryGirl.create(:user) }
+  given(:admin) { FactoryGirl.create(:admin) }
+  given(:food) { FactoryGirl.create(:food) }
+
+  context "一般ユーザーのとき" do
+    background do
+      visit root_path
+      click_link 'ログイン'
+
+      fill_in 'メールアドレス', with: user.email
+      fill_in 'パスワード', with: user.password
+      click_button 'ログイン'
+    end
+    
+    feature "food#index" do
+      scenario "エラーなく商品一覧画面へ遷移すること" do
+        visit foods_path
+        expect(page).to have_http_status(:success)
+      end
+    end
+
+    feature "food#show" do
+      background { visit food_path(food) }
+
+      scenario "商品が表示されること" do
+        expect(page).to have_http_status(200)
+      end
+    end
+
+    feature "food#new" do
+      scenario "権限がないたトップページに遷移すること" do
+        visit new_food_path
+        expect(current_path).to eq home_show_path
+      end
     end
   end
+  
+  context "管理者のとき" do
+    background do
+      visit root_path
+      click_link 'ログイン'
 
-  describe "new/create" do
-    it "生鮮食品登録" do
-      visit new_food_path
-      expect(page).to have_http_status(200)
-      fill_in '商品名', with: '大根'
-      attach_file '商品画像', "#{Rails.root}/spec/factories/test_image.png"
-      fill_in '価格', with: 100
-      fill_in '商品説明', with: '聖護院大根。今が旬！'
-      expect(page).to have_checked_field('表示')
-      fill_in '並び順', with: ''
-      expect { click_on '登　録' }.to change(Food, :count).by(1)
-      expect(page).to have_content '登録しました。'
-      expect(current_path).to eq food_path(id: 1)
+      fill_in 'メールアドレス', with: admin.email
+      fill_in 'パスワード', with: admin.password
+      click_button 'ログイン'
     end
-  end
+    
+    feature "food#index" do
+      scenario "商品一覧画面へ遷移すること" do
+        visit foods_path
+        expect(page).to have_http_status(:success)
+      end
+    end
 
-  describe "food#show" do
-    let(:food) { FactoryGirl.create(:food) }
-    before { visit food_path(food) }
+    feature "food#show" do
+      background { visit food_path(food) }
 
-    it { expect(page).to have_http_status(200) }
-  end
+      scenario "商品が表示されること" do
+        expect(page).to have_http_status(200)
+      end
+    end
 
-  describe "edit/update" do
-    subject { page }
-    let(:food) { FactoryGirl.create(:food) }
-    before { visit edit_food_path(food) }
+    feature "food#new/create" do
+      scenario "生鮮食品登録" do
+        visit new_food_path
+        expect(page).to have_http_status(200)
+        fill_in '商品名', with: '大根'
+        attach_file '商品画像', "#{Rails.root}/spec/factories/test_image.png"
+        fill_in '価格', with: 100
+        fill_in '商品説明', with: '聖護院大根。今が旬！'
+        expect(page).to have_checked_field('表示')
+        fill_in '並び順', with: ''
+        expect { click_on '登　録' }.to change(Food, :count).by(1)
+        expect(page).to have_content '登録しました。'
+        expect(current_path).to eq food_path(id: 1)
+      end
+    end
 
-    describe "page" do
+    feature "food#edit/update" do
+      background { visit edit_food_path(food) }
+
       scenario "表示項目" do
         #save_and_open_page
         is_expected.to have_content "商品情報　更新"
@@ -53,48 +95,59 @@ RSpec.describe "Foods", type: :request do
       end
     end
 
-    describe "with valid information" do
-      let(:new_name) { "New Name" }
-      let(:new_price) { 1500 }
-      before do
+    feature "food#edit/update" do
+      background { visit edit_food_path(food) }
+
+      scenario "表示項目" do
+        #save_and_open_page
+        is_expected.to have_content "商品情報　更新"
+        is_expected.to have_field('商品名', with: 'だいこん')
+        is_expected.to have_field('価格', with: 200)
+        is_expected.to have_field('商品説明', with: 'みずみずしい大根')
+        is_expected.to have_checked_field('表示')
+        is_expected.to have_link "Show"
+      end
+    end
+
+    feature "food#update" do
+      given(:new_name) { "New Name" }
+      given(:new_price) { 1500 }
+      
+      background do
+        visit edit_food_path(food) 
         fill_in "商品名", with: new_name
         fill_in "価格", with: new_price
-
         click_button "更　新"
       end
 
-      it { is_expected.to have_content new_name }
-      it { is_expected.to have_content new_price }
-      it { is_expected.to have_content 'みずみずしい大根' }
-      it { is_expected.to have_content '表示 true' }
-
-      specify { expect(food.reload.name).to eq new_name }
-      specify { expect(food.reload.price).to eq new_price }
+      scenario "入力項目で更新できること" do
+        is_expected.to have_content new_name
+        is_expected.to have_content new_price
+        is_expected.to have_content 'みずみずしい大根'
+        is_expected.to have_content '表示 true'
+        
+        expect(food.reload.name).to eq new_name
+        expect(food.reload.price).to eq new_price
+      end
     end
-  end
 
-  feature "delete" do
-    feature "should be able to delete another food" do
-      subject { page }
-      let(:food) { FactoryGirl.create(:food) }
-
+    feature "food#delete" do
       background do
         food.reload
         visit foods_path
       end
 
-      scenario "food destroy" do
-        expect(page).to have_http_status(200) 
-        is_expected.to have_link "削除"
-        expect { click_link '削除', match: :first }.to change(Food, :count).by(-1)
-        expect(page).to have_content '商品を削除しました。'
-        expect(current_path).to eq foods_path
+      context "削除対象がカートに入ってないとき" do
+        scenario "指定項目が削除できること" do
+          expect(page).to have_http_status(200) 
+          is_expected.to have_link "削除"
+          expect { click_link '削除', match: :first }.to change(Food, :count).by(-1)
+          expect(page).to have_content '商品を削除しました。'
+          expect(current_path).to eq foods_path
+        end
       end
-    end
 
-    context "削除対象がカートに入っている場合" do
-      feature "対象food削除" do
-        subject { page }
+      context "削除対象がカートに入っている場合" do
         let(:food) { FactoryGirl.create(:food) }
         let(:cart) { FactoryGirl.create(:cart_valid) }
         let(:line) { FactoryGirl.create(:line_item) }

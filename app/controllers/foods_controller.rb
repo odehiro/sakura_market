@@ -1,5 +1,7 @@
 class FoodsController < ApplicationController
+  before_action :sign_in_required
   before_action :set_food, only: [:show, :edit, :update, :destroy, :image]
+  before_action :admin_required, only: [:new, :edit, :update, :destroy]
 
   def index
     @foods = Food.all

@@ -1,7 +1,15 @@
 require 'rails_helper'
 
 RSpec.feature "Carts", type: :request do
-  let(:valid_session) { { cart_id: 1 } }
+  given(:user) { FactoryGirl.create(:user) }
+  given(:valid_session) { { cart_id: 1 } }
+
+  background do
+    visit new_user_session_path
+    fill_in 'メールアドレス', with: user.email
+    fill_in 'パスワード', with: user.password
+    click_button 'ログイン'
+  end
 
   feature "GET /carts" do
     scenario "works! (now write some real specs)" do
