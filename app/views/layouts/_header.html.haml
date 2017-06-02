@@ -8,7 +8,10 @@
           %ul.nav.navbar-nav.navbar-left
             %li= link_to "日記を見る", '#'
             %li= link_to "お買い物", '#'
-            %li= link_to "ショッピングカート", '#'
+            %li= link_to "ショッピングカート", carts_path
+            - if current_user.admin?
+              %li= link_to "商品管理", foods_path
+              %li= link_to "ユーザー管理", users_path
           %ul.nav.navbar-nav.navbar-right
             %li= link_to "ログアウト", destroy_user_session_path, method: :delete
         - else

@@ -1,75 +1,123 @@
 require 'rails_helper'
 
-RSpec.describe "Home", type: :request do
+RSpec.feature "Home/Devise", type: :request do
   subject { page }
 
-  describe "GET /index_pages" do
-    before { visit root_path }
+  feature "home#index(welcome画面)" do
+    background { visit root_path }
 
-    describe "項目確認" do
-      it { should have_http_status(200) }
-      it { should have_link("サインイン") }
+    scenario "項目確認" do
+      is_expected.to have_http_status(200)
+      is_expected.to have_link("サインイン")
     end
 
-    describe "ヘッダー項目" do
-      it { should have_link("さくらマーケット", href: root_path) }
-      it { should_not have_link("日記を見る") }
-      it { should_not have_link("お買い物") }
-      it { should_not have_link("ショッピングカート") }
-      it { should have_link("ログイン", href: new_user_session_path) }
+    scenario "ヘッダー項目" do
+      is_expected.to have_link("さくらマーケット", href: root_path)
+      is_expected.not_to have_link("日記を見る")
+      is_expected.not_to have_link("お買い物")
+      is_expected.not_to have_link("ショッピングカート")
+      is_expected.to have_link("ログイン", href: new_user_session_path)
     end
 
-    it "サインインボタンクリック" do
+    scenario "サインインボタンクリック" do
       click_on "サインイン"
       expect(current_path).to eq new_user_registration_path
     end
   end
 
-  describe "signup" do
-  #  let(:submit) { "" }
+  feature "devise#sessions/new" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:admin) { FactoryGirl.create(:admin) }
+    let(:food) { FactoryGirl.create(:food) }
+    let(:food2) { FactoryGirl.create(:food2) }
 
-  #  it "should not create a user" do
-  #    expect { click_button submit }.not_to change(User, :count)
-  #  end
-  end
+    background { visit new_user_session_path }
 
-  describe "login" do
-    before { visit new_user_session_path }
+    context "一般ユーザー" do
+      feature "devise#sessions/create" do
+        background { click_button "ログイン" }
 
-    describe "with invalid information" do
-      before { click_button "ログイン" }
-      
-      it { is_expected.to have_http_status(200) }
-      it { is_expected.to have_title('ログイン') }
-      it { is_expected.to have_selector('p.alert') }
+        scenario "ログインエラーが表示されること" do
+          is_expected.to have_http_status(200)
+          is_expected.to have_title('ログイン')
+          is_expected.to have_selector('p.alert')
+        end
+      end
+
+      feature "devise#sessions/new" do
+        background do
+          user.reload
+          food.reload
+          food2.reload
+          fill_in 'メールアドレス', with: user.email
+          fill_in 'パスワード', with: user.password
+          click_button 'ログイン'
+        end
+
+        scenario "ログイン成功してトップページへ遷移していること" do
+          is_expected.to have_http_status(:success)
+          expect(current_path).to eq home_show_path
+        end
+
+        scenario "ヘッダリンクが表示されていること" do
+          is_expected.to have_link("さくらマーケット", href: root_path)
+          is_expected.to have_link("日記を見る")
+          is_expected.to have_link("お買い物")
+          is_expected.to have_link("ショッピングカート")
+          is_expected.not_to have_link("ログイン")
+          is_expected.to have_link("ログアウト")
+
+          is_expected.not_to have_content "商品管理"
+          is_expected.not_to have_content "ユーザー管理"
+        end
+
+        scenario "商品一覧が表示されていること" do
+          #save_and_open_page
+          is_expected.to have_link food.name
+          #is_expected.to have_css("img[src='']")
+          is_expected.not_to have_content food.price
+          is_expected.not_to have_content food.caption
+
+          is_expected.to have_link food2.name
+        end
+      end
     end
 
-    describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:food) { FactoryGirl.create(:food) }
-      let(:food2) { FactoryGirl.create(:food2) }
+    context "管理者" do
+      feature "devise#sessions/new" do
+        background do
+          admin.reload
+          food.reload
+          food2.reload
+          fill_in 'メールアドレス', with: admin.email
+          fill_in 'パスワード', with: admin.password
+          click_button 'ログイン'
+        end
 
-      before do
-        food.reload
-        food2.reload
-        fill_in 'メールアドレス', with: user.email
-        fill_in 'パスワード', with: user.password
-        click_button 'ログイン'
-      end
+        scenario "ログイン成功してトップページへ遷移していること" do
+          is_expected.to have_http_status(:success)
+          expect(current_path).to eq home_show_path
+        end
 
-      it "ログイン成功してトップページへ遷移していること" do
-        is_expected.to have_http_status(:success)
-        expect(current_path).to eq home_show_path
-      end
+        scenario "管理者用のヘッダリンクが表示されていること" do
+          is_expected.to have_link("さくらマーケット", href: root_path)
+          is_expected.to have_link("日記を見る")
+          is_expected.to have_link("お買い物")
+          is_expected.to have_link("ショッピングカート")
+          is_expected.not_to have_link("ログイン")
+          is_expected.to have_link("ログアウト")
 
-      it "商品一覧が表示されていること" do
-        #save_and_open_page
-        is_expected.to have_link food.name
-        #is_expected.to have_css("img[src='']")
-        is_expected.not_to have_content food.price
-        is_expected.not_to have_content food.caption
+          is_expected.to have_content "商品管理"
+          is_expected.to have_content "ユーザー管理"
+        end
 
-        is_expected.to have_link food2.name
+        scenario "商品一覧が表示されていること" do
+          is_expected.to have_link food.name
+          is_expected.not_to have_content food.price
+          is_expected.not_to have_content food.caption
+
+          is_expected.to have_link food2.name
+        end
       end
     end
   end
