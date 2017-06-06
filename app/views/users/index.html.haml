@@ -1,7 +1,26 @@
-.center.hero-unit
-  %h1 user#index
+- provide(:title, "ユーザー一覧")
 
-  %h2 This is home page
+%h1 ユーザー一覧
 
-  = link_to "サインイン", new_user_registration_path,
-    class: "btn btn-large btn-primary"
+%table
+  %thead
+    %tr
+      %th 氏名
+      %th メールアドレス
+      %th 管理者権限
+
+      %th
+      %th
+      %th
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.name
+        %td= user.email
+        %td= user.admin
+
+        %td= link_to '表示', user
+        %td= link_to '編集', edit_user_path(user)
+        %td= link_to '削除', user, method: :delete, data: { confirm: '削除して宜しいですか？' }
+%br
+= link_to '新規登録', new_user_path
