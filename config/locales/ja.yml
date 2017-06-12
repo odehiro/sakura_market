@@ -1,10 +1,13 @@
 ja:
   activerecord:
     models:
+      user: ユーザー
       food: 商品
 ja:
   activerecord:
     attributes:
+      user:
+        name: 名前
       food:
         name: 商品名
         image: 商品画像
