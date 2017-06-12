@@ -9,13 +9,38 @@ RSpec.feature "User pages", type: :request do
   context "一般ユーザーのとき" do
     background do
       visit root_path
+
       click_link 'ログイン'
 
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       click_button 'ログイン'
     end
-    
+
+    feature "devise#registrations" do
+      background do
+        click_link 'ログアウト'
+        visit new_user_registration_path
+      end
+
+      scenario "項目確認" do
+        is_expected.to have_content('メールアドレス') 
+        is_expected.to have_content('パスワード') 
+        is_expected.to have_content('確認用パスワード') 
+        is_expected.to have_content('Sign up') 
+      end
+
+      scenario "一般ユーザーが登録できること" do
+        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'パスワード', with: user.password
+        fill_in '確認用パスワード', with: user.password
+        expect { click_button 'Sign up' }.to change(User, :count).by(1)
+        expect(page).to have_content 'アカウント登録が完了しました。'
+        expect(current_path).to eq home_show_path
+        #save_and_open_page
+      end
+    end
+
     feature "#index" do
       background { visit users_path }
 
