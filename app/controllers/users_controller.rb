@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :sign_in_required
-  before_action :correct_user, only: [:show, :edit, :update]
+  before_action :correct_user, only: [:show]
   before_action :admin_required, only: [:index, :destroy]
 
   def index
@@ -13,29 +13,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-  end
-
-  def edit
-  end
-
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      @user.send_activation_email
-      flash[:info] = "Please check your email to activate your account."
-      redirect_to root_url
-    else
-      render 'new'
-    end
-  end
-
-  def update
-    if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
-      redirect_to @user
-    else
-      render 'edit'
-    end
   end
 
   def destroy

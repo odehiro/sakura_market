@@ -17,20 +17,22 @@ RSpec.feature "User pages", type: :request do
       click_button 'ログイン'
     end
 
-    feature "devise#registrations" do
+    feature "devise/registrations#new" do
       background do
         click_link 'ログアウト'
         visit new_user_registration_path
       end
 
       scenario "項目確認" do
-        is_expected.to have_content('メールアドレス') 
-        is_expected.to have_content('パスワード') 
-        is_expected.to have_content('確認用パスワード') 
-        is_expected.to have_content('Sign up') 
+        is_expected.to have_content('名前')
+        is_expected.to have_content('メールアドレス')
+        is_expected.to have_content('パスワード')
+        is_expected.to have_content('確認用パスワード')
+        is_expected.to have_content('Sign up')
       end
 
       scenario "一般ユーザーが登録できること" do
+        fill_in '名前', with: 'テストユーザー'
         fill_in 'メールアドレス', with: 'test@example.com'
         fill_in 'パスワード', with: user.password
         fill_in '確認用パスワード', with: user.password
@@ -38,6 +40,7 @@ RSpec.feature "User pages", type: :request do
         expect(page).to have_content 'アカウント登録が完了しました。'
         expect(current_path).to eq home_show_path
         #save_and_open_page
+        click_link 'ログアウト'
       end
     end
 
@@ -66,10 +69,49 @@ RSpec.feature "User pages", type: :request do
         expect(current_path).not_to eq user_path(admin)
       end
     end
+    
+    feature "devise/registrations#edit" do
+      background { visit edit_user_registration_path(user) }
+
+      scenario "項目確認" do
+        is_expected.to have_content('名前')
+        is_expected.to have_content('メールアドレス')
+        is_expected.to have_content('パスワード')
+        is_expected.to have_content('確認用パスワード')
+        is_expected.to have_content('現在のパスワード')
+        is_expected.to have_button('Update')
+      end
+
+      scenario "自分アカウントを編集できること" do
+        fill_in '名前', with: 'テストユーザー２'
+        fill_in 'メールアドレス', with: 'test2@example.com'
+        fill_in 'パスワード', with: 'foobar2'
+        fill_in '確認用パスワード', with: 'foobar2'
+        fill_in '現在のパスワード', with: user.password
+
+        expect { click_button 'Update' }.not_to change(User, :count)
+        expect(page).to have_content 'アカウント情報を変更しました。'
+        
+        #save_and_open_page
+        #expect(current_path).to eq user_path(user)
+        #FIXME: after_update_path_for()をOverrideできなかった
+        visit user_path(user)
+        #expect(user2.name).to eq 'テストユーザー２'
+        #expect(page).to have_content 'テストユーザー２'
+      end
+    end
+    
+    feature "#destroy" do
+      scenario "ユーザーを削除できないこと"
+    end
+
   end
 
   context "管理者のとき" do
     background do
+      user.reload
+      admin.reload
+
       visit root_path
       click_link 'ログイン'
 
@@ -109,20 +151,7 @@ RSpec.feature "User pages", type: :request do
     end
   end
 
-  feature "devise#registrations" do
-    background { visit new_user_registration_path }
-
-    scenario "項目確認" do
-      is_expected.to have_content('Sign up') 
-    end
-
-    scenario "一般ユーザー登録"
-  end
-
-  feature "#edit" do
-    scenario "ユーザー情報を更新できること"
-  end
-  feature "#destroy" do
+ feature "#destroy" do
     scenario "ユーザーを削除できること"
   end
 end
