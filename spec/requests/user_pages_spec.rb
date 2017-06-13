@@ -149,9 +149,18 @@ RSpec.feature "User pages", type: :request do
         expect(current_path).to eq user_path(user)
       end
     end
-  end
 
- feature "#destroy" do
-    scenario "ユーザーを削除できること"
+    #FIXME
+    feature "#destroy" do
+      scenario "ユーザーを削除できること" do
+      #, js: true do
+        visit users_path
+        expect(page).to have_link '削除'
+
+        #page.accept_confirm 'Are you sure?' do
+        #  first('tbody tr').click_link '削除'
+        #end
+      end
+    end
   end
 end
