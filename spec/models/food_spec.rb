@@ -19,27 +19,43 @@ RSpec.describe Food, type: :model do
       image: "",
       price: 1000,
       caption: "発芽すると栄養豊富",
-      display: true,
-      order: ""
+      display: true
     )
   end
 
   subject { @food }
 
-  it { should be_valid }
+  describe ".new" do
+    it "beforeのデータが作成可能であること" do
+      is_expected.to be_valid
+    end
 
-  describe "名称が空白でないこと" do
-    before {@food.name = ""}
-    it { should_not be_valid }
-  end
+    it "名称が空白は有効でないこと" do
+      @food.name = ""
+      is_expected.not_to be_valid
+    end
 
-  describe "金額が空白でないこと" do
-    before {@food.price = ""}
-    it { should_not be_valid }
-  end
+    it "金額が空白は有効でないこと" do
+      @food.price = ""
+      is_expected.not_to be_valid
+    end
+    
+    it "商品説明が空白は有効でないこと" do
+      @food.caption = ""
+      is_expected.not_to be_valid
+    end
+    
+    it "並び順が自動採番されていること" do
+      @food.save
+      expect(Food.find(@food.id).order).to eq Food.all.count
 
-  describe "商品説明が空白でないこと" do
-    before {@food.caption = ""}
-    it { should_not be_valid }
+      food2 = Food.create(name: "玄米",
+                          image: "",
+                          price: 1000,
+                          caption: "発芽すると栄養豊富",
+                          display: true
+                         )
+      expect(food2.order).to eq 2
+    end
   end
 end
