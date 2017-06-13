@@ -6,6 +6,7 @@ RSpec.feature "Foods", type: :request do
   given(:user) { FactoryGirl.create(:user) }
   given(:admin) { FactoryGirl.create(:admin) }
   given(:food) { FactoryGirl.create(:food) }
+  given(:food2) { FactoryGirl.create(:food2) }
 
   context "一般ユーザーのとき" do
     background do
@@ -17,10 +18,20 @@ RSpec.feature "Foods", type: :request do
       click_button 'ログイン'
     end
     
-    feature "food#index" do
+    feature "#index" do
+      before do
+        food.reload
+        food2.reload
+      end
+
       scenario "エラーなく商品一覧画面へ遷移すること" do
         visit foods_path
         expect(page).to have_http_status(:success)
+      end
+      
+      scenario "並び順はorderの昇順であること" do
+        visit foods_path
+        expect(first('tbody tr')).to have_content food2.name
       end
     end
 
@@ -85,7 +96,6 @@ RSpec.feature "Foods", type: :request do
       background { visit edit_food_path(food) }
 
       scenario "表示項目" do
-        #save_and_open_page
         is_expected.to have_content "商品情報　更新"
         is_expected.to have_field('商品名', with: 'だいこん')
         is_expected.to have_field('価格', with: 200)

@@ -17,7 +17,7 @@
       %th
 
   %tbody
-    - @foods.each do |food|
+    - @foods.order(:order).each do |food|
       %tr
         %td= food.name
         %td= image_tag image_food_path(food)

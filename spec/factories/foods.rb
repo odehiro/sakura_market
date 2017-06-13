@@ -5,7 +5,7 @@ FactoryGirl.define do
     price 200
     caption "みずみずしい大根"
     display true
-    order ""
+    order 2
   end
   
   factory :food2, class: Food do
@@ -14,7 +14,6 @@ FactoryGirl.define do
     price 100
     caption "新鮮なのでシャッキシャキ！！"
     display true
-    order ""
+    order 1
   end
-
 end

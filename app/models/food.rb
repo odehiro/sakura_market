@@ -17,12 +17,14 @@ class Food < ApplicationRecord
     end
 
     def add_order
-      if Food.all.count == 0
-        self.order = 1
-      else
-        max = Food.maximum("order") 
-        #debugger
-        self.order =  max + 1
+      if !self.order
+        if Food.all.count == 0
+          self.order = 1
+        else
+          max = Food.maximum("order") 
+          #debugger
+          self.order =  max + 1
+        end
       end
     end
 end
