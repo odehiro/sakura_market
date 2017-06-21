@@ -40,7 +40,7 @@ RSpec.feature "Home/Devise", type: :request do
         scenario "ログインエラーが表示されること" do
           is_expected.to have_http_status(200)
           is_expected.to have_title('ログイン')
-          is_expected.to have_selector('p.alert')
+          is_expected.to have_selector('p#alert')
         end
       end
 

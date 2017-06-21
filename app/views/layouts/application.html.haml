@@ -25,8 +25,8 @@
 
     .container
       - if notice
-        %p.notice= notice
+        %p#notice= notice
       - if alert
-        %p.alert= alert
+        %p#alert= alert
 
       = yield
