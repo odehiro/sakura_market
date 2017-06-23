@@ -14,6 +14,6 @@
     = f.text_area :address
   .field
     = f.label :pay_type
-    = f.text_field :pay_type
+    = f.select :pay_type, Order::PAYMENT_TYPES, prompt: 'お支払い方法を選択してください'
   .actions
-    = f.submit 'Save'
+    = f.submit '注文する'
