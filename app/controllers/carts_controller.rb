@@ -1,9 +1,8 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
 
-  # GET /carts
-  # GET /carts.json
   def index
+    admin_required
     @carts = Cart.all
   end
 

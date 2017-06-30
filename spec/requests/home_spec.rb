@@ -63,7 +63,7 @@ RSpec.feature "Home/Devise", type: :request do
           is_expected.to have_link("さくらマーケット", href: root_path)
           is_expected.to have_link("日記を見る")
           is_expected.to have_link("お買い物")
-          is_expected.to have_link("ショッピングカート")
+          #is_expected.to have_link("ショッピングカート")
           is_expected.not_to have_link("ログイン")
           is_expected.to have_link("ログアウト")
 
@@ -103,7 +103,7 @@ RSpec.feature "Home/Devise", type: :request do
           is_expected.to have_link("さくらマーケット", href: root_path)
           is_expected.to have_link("日記を見る")
           is_expected.to have_link("お買い物")
-          is_expected.to have_link("ショッピングカート")
+          #is_expected.to have_link("ショッピングカート")
           is_expected.not_to have_link("ログイン")
           is_expected.to have_link("ログアウト")
 
