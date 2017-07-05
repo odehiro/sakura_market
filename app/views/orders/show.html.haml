@@ -1,5 +1,7 @@
+- provide(:title, "注文情報")
 %p#notice= notice
 
+%h1 注文情報
 %p
   %b Name:
   = @order.name
@@ -9,7 +11,20 @@
 %p
   %b Pay type:
   = @order.pay_type
+%table
+  %caption 購入商品
+  %thead
+    %tr
+      %th 商品名
+      %th 価格
+  %tbody
+    - @order.line_items.each do |line_item|
+      %tr
+        %td= line_item.food.name
+        %td= line_item.food.price
 
-= link_to 'Edit', edit_order_path(@order)
-\|
+- if current_user.admin?
+  = link_to 'Edit', edit_order_path(@order)
+  \|
+
 = link_to 'Back', orders_path
