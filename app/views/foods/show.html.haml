@@ -11,16 +11,19 @@
 %p
   %b= t('activerecord.attributes.food.price')
   = @food.price
-%p
-  %b= t('activerecord.attributes.food.caption')
-  = @food.caption
-%p
-  %b= t('activerecord.attributes.food.display')
-  = @food.display
-%p
-  %b= t('activerecord.attributes.food.order')
-  = @food.order
+- if current_user.admin?
+  %p
+    %b= t('activerecord.attributes.food.caption')
+    = @food.caption
+  %p
+    %b= t('activerecord.attributes.food.display')
+    = @food.display
+  %p
+    %b= t('activerecord.attributes.food.order')
+    = @food.order
 
-= link_to '編　集', edit_food_path(@food)
+  = link_to '編　集', edit_food_path(@food)
+  \|
+= link_to 'カートに入れる', line_items_path(food_id: @food), method: :post
 \|
 = link_to '戻　る', foods_path

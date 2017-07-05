@@ -36,7 +36,7 @@ RSpec.feature "Carts", type: :request do
       end
 
       scenario "カートに商品が入ること" do
-        visit foods_path
+        visit food_path(food.id)
         expect(page).to have_http_status(200)
         expect(page).to have_link 'カートに入れる'
         expect { click_link 'カートに入れる', match: :first }.to change(LineItem, :count).by(+1)
@@ -44,7 +44,7 @@ RSpec.feature "Carts", type: :request do
       end
 
       scenario "ヘッダリンクからカートに入れた商品が見れること" do
-        visit foods_path
+        visit food_path(food.id)
         click_link 'カートに入れる'
 
         visit home_show_path
