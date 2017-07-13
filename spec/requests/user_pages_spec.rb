@@ -99,8 +99,16 @@ RSpec.feature "User pages", type: :request do
         #expect(user2.name).to eq 'テストユーザー２'
         #expect(page).to have_content 'テストユーザー２'
       end
-    end
     
+      scenario "住所が登録できること" do
+        fill_in '現在のパスワード', with: user.password
+        fill_in '住所', with: user.to_address
+
+        expect { click_button 'Update' }.not_to change(User, :count)
+        expect(page).to have_content 'アカウント情報を変更しました。'
+      end
+    end
+
     feature "#destroy" do
       scenario "ユーザーを削除できないこと"
     end
