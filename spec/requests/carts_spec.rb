@@ -56,6 +56,28 @@ RSpec.feature "Carts", type: :request do
       end
     end
 
+    feature "#show" do
+      given(:food) { FactoryGirl.create(:food) }
+      given(:cart) { FactoryGirl.create(:cart_valid) }
+      given(:line) { FactoryGirl.create(:line_item) }
+
+      background do
+        food.reload
+        cart.reload
+        line.reload
+      end
+
+      scenario "カートに入れた商品が表示されること" do
+        visit cart_path(cart)
+        expect(page).to have_http_status(200)
+        is_expected.to have_content food.name
+        is_expected.to have_content line.quantity
+        is_expected.to have_content (food.price * line.quantity)
+        is_expected.to have_content "216円"
+
+      end
+    end
+
     feature "カートを空にするボタンクリック" do
       given(:food) { FactoryGirl.create(:food) }
       given(:cart) { FactoryGirl.create(:cart_valid) }
