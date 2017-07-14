@@ -68,7 +68,11 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    config (1.4.0)
+      activesupport (>= 3.0)
+      deep_merge (~> 1.1.1)
     debug_inspector (0.0.2)
+    deep_merge (1.1.1)
     devise (4.2.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -291,6 +295,7 @@ DEPENDENCIES
   byebug (= 9.0.0)
   capybara
   coffee-rails (= 4.2.1)
+  config
   devise
   devise-i18n
   factory_girl_rails

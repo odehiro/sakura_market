@@ -13,6 +13,7 @@ gem 'bootstrap-sass', '3.3.6'
 gem 'devise'
 gem 'devise-i18n'
 gem 'rails-i18n'
+gem 'config'
 
 group :development, :test do
   gem 'sqlite3', '1.3.11'
