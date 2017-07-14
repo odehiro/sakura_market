@@ -6,7 +6,7 @@
       %td= "#{item.quantity}個"
       %td= number_to_currency(item.total_price)
   %tr.total_line
-    %td{colspan: 2} 合計
+    %td{colspan: 2} 合計(税込み)
     %td.total_cell= number_to_currency(@cart.total_price)
 = button_to '購入', new_order_path, method: :get
 = button_to 'カートを空にする', @cart, method: :delete, confirm: '本当によろしいですか？'
