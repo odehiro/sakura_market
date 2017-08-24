@@ -1,0 +1,2 @@
+class CashOnDelivery < ApplicationRecord
+end
