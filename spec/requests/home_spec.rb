@@ -80,6 +80,13 @@ RSpec.feature "Home/Devise", type: :request do
 
           is_expected.to have_link food2.name
         end
+
+        # TODO
+        xscenario "welcome画面へ遷移しても、トップへリダイレクトされること" do
+          visit root_path
+
+          expect(current_path).to eq home_show_path
+        end
       end
     end
 

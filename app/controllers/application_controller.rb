@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     home_show_path
   end
 
+  def after_sign_out_path_for(resource)
+    root_path
+  end
+
   def admin_required
     redirect_to home_show_url unless current_user.admin?
   end
