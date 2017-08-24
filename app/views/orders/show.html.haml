@@ -11,8 +11,8 @@
 %p
   %b Pay type:
   = @order.pay_type
+%h2 購入商品
 %table
-  %caption 購入商品
   %thead
     %tr
       %th 商品名
@@ -22,9 +22,17 @@
       %tr
         %td= line_item.food.name
         %td= line_item.food.price
-
+    %tr
+      %td= '小計'
+      %td= @order.total_price
+    %tr
+      %td= '代引き金額'
+      %td= @order.cash_on_delivery_price
+    %tr
+      %td= '合計金額'
+      %td= @order.all_total_price
+%br
 - if current_user.admin?
   = link_to 'Edit', edit_order_path(@order)
   \|
-
 = link_to 'Back', orders_path
