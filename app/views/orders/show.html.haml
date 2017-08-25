@@ -21,16 +21,16 @@
     - @order.line_items.each do |line_item|
       %tr
         %td= line_item.food.name
-        %td= line_item.food.price
+        %td= number_to_currency(line_item.food.price)
     %tr
       %td= '小計'
-      %td= @order.total_price
+      %td= number_to_currency(@order.total_price)
     %tr
       %td= '代引き金額'
-      %td= @order.cash_on_delivery_price
+      %td= number_to_currency(@order.cash_on_delivery_price)
     %tr
       %td= '合計金額'
-      %td= @order.all_total_price
+      %td= number_to_currency(@order.all_total_price)
 %br
 - if current_user.admin?
   = link_to 'Edit', edit_order_path(@order)
