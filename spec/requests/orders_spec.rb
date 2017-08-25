@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature "Orders", type: :request do
   subject { page }
 
+  given(:cash1) { FactoryGirl.create(:cash1) }
   given(:user) { FactoryGirl.create(:user) }
   given(:user2) { FactoryGirl.create(:user_to_empty) }
   given(:admin) { FactoryGirl.create(:admin) }
@@ -13,6 +14,7 @@ RSpec.feature "Orders", type: :request do
 
   context "一般ユーザー(送付先登録済み)のとき" do
     background do
+      cash1.reload
       food.reload
       cart.reload
       order1.reload
@@ -59,12 +61,17 @@ RSpec.feature "Orders", type: :request do
         is_expected.to have_content '購入商品'
         is_expected.to have_content food.name
         is_expected.to have_content food.price
+
+        is_expected.to have_content '小計'
+        is_expected.to have_content '代引き金額'
+        is_expected.to have_content '合計'
       end
     end
   end
   
   context "一般ユーザー(送付先登録なし)のとき" do
     background do
+      cash1.reload
       food.reload
       cart.reload
       order1.reload
@@ -110,6 +117,7 @@ RSpec.feature "Orders", type: :request do
 
   context "管理者のとき" do
     background do
+      cash1.reload
       food.reload
       cart.reload
       order1.reload
