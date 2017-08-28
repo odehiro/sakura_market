@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825065815) do
+ActiveRecord::Schema.define(version: 20170828070744) do
 
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20170825065815) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.date     "delivery_date"
-    t.integer  "delivery_timezone"
+    t.string   "delivery_timezone"
   end
 
   create_table "users", force: :cascade do |t|
