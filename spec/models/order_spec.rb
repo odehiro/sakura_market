@@ -5,7 +5,9 @@ RSpec.describe Order, type: :model do
     @order = Order.new(
       name: "User",
       address: "京都府京都市",
-      pay_type: "代引き"
+      pay_type: "代引き",
+      delivery_date: "2017-8-25",
+      delivery_timezone: "8-12"
     )
   end
 
@@ -28,6 +30,10 @@ RSpec.describe Order, type: :model do
     
     it "支払い方法が選択されていること" do
       @order.pay_type = "カード"
+      is_expected.not_to be_valid
+    end
+    it "配送時間帯が選択範囲であること" do
+      @order.delivery_timezone = "21-22"
       is_expected.not_to be_valid
     end
   end
