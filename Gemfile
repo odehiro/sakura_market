@@ -14,6 +14,7 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'rails-i18n'
 gem 'config'
+gem 'business_time'
 
 group :development, :test do
   gem 'sqlite3', '1.3.11'
