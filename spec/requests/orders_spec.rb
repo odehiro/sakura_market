@@ -39,12 +39,19 @@ RSpec.feature "Orders", type: :request do
     end
 
     feature "#new" do
+      delivery = Delivery.new(Date.today, Date.today + 3.day)
+
       scenario "カートの情報を元に、注文ができること" do
         click_button '購入'
         is_expected.to have_http_status(200)
         is_expected.to have_content "購入画面"
         is_expected.to have_field 'Name', with: user.to_name
         is_expected.to have_field 'Address', with: user.to_address
+        is_expected.to have_content 'Delivery date'
+        #is_expected.to have_field 'delivery_date', with: delivery.delivery_start_date
+        is_expected.to have_content 'Delivery timezone'
+        #is_expected.to have_field 'delivery_timezone', with: '20-21'
+        save_and_open_page
       end
     end
 
