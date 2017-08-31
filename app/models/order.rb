@@ -6,7 +6,9 @@ class Order < ApplicationRecord
 
   validates :name, :address, presence: true
   validates :pay_type, inclusion: PAYMENT_TYPES
+  #validates :delivery_date, allow_nil: true, greater_than: Date.today #allow_nil:true
   validates :delivery_timezone, inclusion: TIMEZONE, allow_nil: true
+  validate :ship_date?#, allow_blank: true
   
   @total = 0
   @cashOnDeliveryPrice = 0
@@ -28,5 +30,30 @@ class Order < ApplicationRecord
       item.cart_id = nil
       line_items << item
     end
+  end
+
+  def ship_date?(today = Date.today, target_day = self.delivery_date)
+    if self.delivery_date == nil then
+      return true
+    end
+
+    delivery = Delivery.new(today, target_day)
+
+    unless target_day.workday? then
+      errors.add(:delivery_date, "土日は営業日外です。")
+      return false
+    end
+
+    unless target_day > delivery.delivery_start_date then
+      errors.add(:delivery_date, "配送日は３営業日後からになります。")
+      return false
+    end
+
+    unless target_day < delivery.delivery_end_date then
+      errors.add(:delivery_date, "配送日は１４営業日までになります。")
+      return false
+    end
+
+    return true
   end
 end

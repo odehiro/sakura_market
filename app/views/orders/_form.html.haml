@@ -15,5 +15,11 @@
   .field
     = f.label :pay_type
     = f.select :pay_type, Order::PAYMENT_TYPES, prompt: 'お支払い方法を選択してください'
+  .field
+    = f.label :delivery_date
+    = f.date_select :delivery_date, { use_month_numbers: true }
+  .field
+    = f.label :delivery_timezone
+    = f.select :delivery_timezone, Order::TIMEZONE, prompt: '配送時間帯を選択してください'
   .actions
     = f.submit '注文する'
