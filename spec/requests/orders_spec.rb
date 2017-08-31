@@ -51,7 +51,7 @@ RSpec.feature "Orders", type: :request do
         #is_expected.to have_field 'delivery_date', with: delivery.delivery_start_date
         is_expected.to have_content 'Delivery timezone'
         #is_expected.to have_field 'delivery_timezone', with: '20-21'
-        save_and_open_page
+        #save_and_open_page
       end
     end
 
@@ -71,6 +71,7 @@ RSpec.feature "Orders", type: :request do
 
         is_expected.to have_content '小計'
         is_expected.to have_content '代引き金額'
+        is_expected.to have_content '送料'
         is_expected.to have_content '合計'
       end
     end

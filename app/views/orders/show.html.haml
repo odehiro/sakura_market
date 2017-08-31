@@ -29,6 +29,9 @@
       %td= '代引き金額'
       %td= number_to_currency(@order.cash_on_delivery_price)
     %tr
+      %td= '送料'
+      %td= number_to_currency(@order.shipping_cost)
+    %tr
       %td= '合計金額'
       %td= number_to_currency(@order.all_total_price)
 %br

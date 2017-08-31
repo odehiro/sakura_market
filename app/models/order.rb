@@ -22,7 +22,7 @@ class Order < ApplicationRecord
   end
   
   def all_total_price
-    @total + @cashOnDeliveryPrice
+    @total + @cashOnDeliveryPrice + shipping_cost
   end
 
   def add_line_items_from_cart(cart)
@@ -55,5 +55,12 @@ class Order < ApplicationRecord
     end
 
     return true
+  end
+
+  def shipping_cost
+    items_count = line_items.to_a.sum { |item| item.quantity }
+
+    shipping = Shipping.new(items_count)
+    shipping.cost
   end
 end
