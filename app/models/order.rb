@@ -22,7 +22,7 @@ class Order < ApplicationRecord
   end
   
   def all_total_price
-    @total + @cashOnDeliveryPrice + shipping_cost
+    (BigDecimal(@total + @cashOnDeliveryPrice + shipping_cost) * BigDecimal(Settings.price.consumption_tax)).floor
   end
 
   def add_line_items_from_cart(cart)
