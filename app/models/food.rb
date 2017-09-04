@@ -21,7 +21,7 @@ class Food < ApplicationRecord
         if Food.all.count == 0
           self.order = 1
         else
-          max = Food.maximum("order") 
+          max = Food.maximum(:order) 
           #debugger
           self.order =  max + 1
         end
