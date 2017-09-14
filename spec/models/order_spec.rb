@@ -1,15 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
+  let(:user) { FactoryGirl.create(:user) }
   delivery = Delivery.new(Date.today, Date.today + 3.day)
 
   before do
+    user.reload
+
     @order = Order.new(
       name: "User",
       address: "京都府京都市",
       pay_type: "代引き",
       delivery_date: delivery.delivery_start_date + 1.day,
-      delivery_timezone: "8-12"
+      delivery_timezone: "8-12",
+      user_id: 1
     )
   end
 

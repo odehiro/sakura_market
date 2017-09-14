@@ -14,6 +14,7 @@ RSpec.feature "Orders", type: :request do
 
   context "一般ユーザー(送付先登録済み)のとき" do
     background do
+      user.reload
       cash1.reload
       food.reload
       cart.reload
@@ -79,6 +80,7 @@ RSpec.feature "Orders", type: :request do
   
   context "一般ユーザー(送付先登録なし)のとき" do
     background do
+      user.reload
       cash1.reload
       food.reload
       cart.reload
@@ -125,6 +127,7 @@ RSpec.feature "Orders", type: :request do
 
   context "管理者のとき" do
     background do
+      user.reload
       cash1.reload
       food.reload
       cart.reload

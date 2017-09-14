@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   PAYMENT_TYPES = ["代引き"]
   TIMEZONE = [ "8-12", "12-14", "14-16", "16-18", "18-20", "20-21" ]
 
+  belongs_to :user
   has_many :line_items, dependent: :destroy
 
   validates :name, :address, presence: true

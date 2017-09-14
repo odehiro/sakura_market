@@ -7,6 +7,7 @@ FactoryGirl.define do
     pay_type "代引き"
     delivery_date delivery.delivery_start_date + 1.day
     delivery_timezone '8-12'
+    user_id 1
   end
   
   factory :order2, class: Order do
@@ -15,5 +16,6 @@ FactoryGirl.define do
     pay_type "代引き"
     delivery_date Date.today + (5 - Date.today.cwday)
     delivery_timezone '8-12'
+    user_id 1
   end
 end
