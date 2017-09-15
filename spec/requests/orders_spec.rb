@@ -35,7 +35,7 @@ RSpec.feature "Orders", type: :request do
     feature "GET /orders" do
       scenario "works! (now write some real specs)" do
         get orders_path
-        expect(response).to have_http_status(200)
+        expect(page).to have_http_status(200)
       end
     end
 
@@ -145,10 +145,10 @@ RSpec.feature "Orders", type: :request do
       click_link 'カートに入れる'
     end
 
-    feature "GET /orders" do
+    xfeature "GET /orders" do
       scenario "works! (now write some real specs)" do
         get orders_path
-        expect(response).to have_http_status(200)
+        expect(page).to have_http_status(200)
       end
     end
 
