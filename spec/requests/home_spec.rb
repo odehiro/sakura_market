@@ -82,7 +82,7 @@ RSpec.feature "Home/Devise", type: :request do
         end
 
         # TODO
-        xscenario "welcome画面へ遷移しても、トップへリダイレクトされること" do
+        scenario "welcome画面へ遷移しても、トップへリダイレクトされること" do
           visit root_path
 
           expect(current_path).to eq home_show_path
