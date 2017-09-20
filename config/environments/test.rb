@@ -39,4 +39,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  
+  # ログを見やすくするために追加 https://joppot.info/2014/05/20/1405
+  config.logger = Logger.new(config.paths["log"].first)
+  config.logger.formatter = Logger::Formatter.new
 end
