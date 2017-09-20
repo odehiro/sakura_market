@@ -13,6 +13,7 @@ RSpec.feature "Orders", type: :request do
   given(:order1) { FactoryGirl.create(:order1) }
 
   context "一般ユーザー(送付先登録済み)のとき" do
+
     background do
       user.reload
       cash1.reload
@@ -27,7 +28,7 @@ RSpec.feature "Orders", type: :request do
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       click_button 'ログイン'
-      
+
       visit food_path(food.id)
       click_link 'カートに入れる'
     end
@@ -49,7 +50,7 @@ RSpec.feature "Orders", type: :request do
         is_expected.to have_field 'Name', with: user.to_name
         is_expected.to have_field 'Address', with: user.to_address
         is_expected.to have_content 'Delivery date'
-        #is_expected.to have_field 'delivery_date', with: delivery.delivery_start_date
+        #is_expected.to have_field 'delivery_date', with: delivery.start_date
         is_expected.to have_content 'Delivery timezone'
         #is_expected.to have_field 'delivery_timezone', with: '20-21'
         #save_and_open_page
@@ -77,7 +78,7 @@ RSpec.feature "Orders", type: :request do
       end
     end
   end
-  
+
   context "一般ユーザー(送付先登録なし)のとき" do
     background do
       user.reload
@@ -93,7 +94,7 @@ RSpec.feature "Orders", type: :request do
       fill_in 'メールアドレス', with: user2.email
       fill_in 'パスワード', with: user2.password
       click_button 'ログイン'
-      
+
       visit food_path(food.id)
       click_link 'カートに入れる'
     end
