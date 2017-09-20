@@ -97,7 +97,7 @@ RSpec.feature "Carts", type: :request do
         # ↓セッションの値入れないとエラーになる
         #expect { click_button 'カートを空にする' }.to change(Cart, :count).by(-1)
         click_button 'カートを空にする'
-        expect(current_path).to eq root_path
+        expect(current_path).to eq home_show_path
       end
     end
   end
