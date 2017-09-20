@@ -40,17 +40,18 @@ class Order < ApplicationRecord
 
     delivery = Delivery.new(today, target_day)
 
-    unless target_day.workday? then
+    unless delivery.target_workday? then
       errors.add(:delivery_date, "土日は営業日外です。")
       return false
     end
 
-    unless target_day > delivery.delivery_start_date then
+    unless target_day > delivery.start_date then
+      #logger.debug "target_day= #{ target_day.to_s }, start_date: #{ delivery.start_date }"
       errors.add(:delivery_date, "配送日は３営業日後からになります。")
       return false
     end
 
-    unless target_day < delivery.delivery_end_date then
+    unless target_day < delivery.end_date then
       errors.add(:delivery_date, "配送日は１４営業日までになります。")
       return false
     end
