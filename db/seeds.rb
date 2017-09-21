@@ -62,3 +62,7 @@ Food.create(name: "メロン",
             display: true,
             order: 6
            )
+CashOnDelivery.create(less: 10000, price: 300)
+CashOnDelivery.create(less: 30000, price: 400)
+CashOnDelivery.create(less: 100000, price: 600)
+CashOnDelivery.create(less: 999999999, price: 1000)
