@@ -23,12 +23,13 @@ class OrdersController < ApplicationController
     end
 
     @order = Order.new
-    if current_user.to_name.empty?
+    if current_user.to_name.blank?
       @order.name = current_user.name
     else
       @order.name = current_user.to_name
     end
     @order.address = current_user.to_address
+    @order.user_id = current_user.id
   end
 
   # GET /orders/1/edit
