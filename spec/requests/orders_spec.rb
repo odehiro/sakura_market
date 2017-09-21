@@ -146,7 +146,7 @@ RSpec.feature "Orders", type: :request do
       click_link 'カートに入れる'
     end
 
-    xfeature "GET /orders" do
+    feature "GET /orders" do
       scenario "works! (now write some real specs)" do
         get orders_path
         expect(page).to have_http_status(200)

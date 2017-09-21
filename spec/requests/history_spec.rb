@@ -49,7 +49,11 @@ RSpec.feature "History", type: :request do
         is_expected.to have_link '注文詳細'
       end
 
-      scenario '各購入履歴の詳細が表示されること'
+      scenario '各購入履歴の詳細が表示されること' do
+        click_link '購入履歴'
+        first('tbody tr').click_link '注文詳細'
+        expect(current_path).to eq order_path(order1.id)
+      end
     end
   end
 

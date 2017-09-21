@@ -80,6 +80,7 @@ RSpec.feature "User pages", type: :request do
         is_expected.to have_content('確認用パスワード')
         is_expected.to have_content('現在のパスワード')
         is_expected.to have_button('Update')
+        is_expected.to have_button('Cancel my account')
       end
 
       scenario "自分アカウントを編集できること" do
@@ -110,9 +111,8 @@ RSpec.feature "User pages", type: :request do
     end
 
     feature "#destroy" do
-      scenario "ユーザーを削除できないこと"
+      xscenario "時分のアカウントを削除できること"
     end
-
   end
 
   context "管理者のとき" do

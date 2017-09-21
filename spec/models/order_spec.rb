@@ -39,8 +39,7 @@ RSpec.describe Order, type: :model do
       is_expected.not_to be_valid
     end
 
-    #TODO:このテストは必要。必要ならどう書く？カスタムValidates？
-    xit "配送日が土日でないこと" do
+    it "配送日が土日でないこと" do
       @order.delivery_date = "2017-8-26"
       is_expected.not_to be_valid
     end
