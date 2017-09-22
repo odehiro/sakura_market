@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
     if @current_user.admin?
       @orders = Order.all
     else
-      @orders = Order.where(id: @current_user)
+      @orders = Order.where(user_id: @current_user)
     end
   end
 
@@ -87,6 +87,8 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:name, :address, :pay_type)
+      params.require(:order).permit(:name, :address, :pay_type,
+                                    :delivery_date, :delivery_timezone,
+                                    :user_id)
     end
 end
