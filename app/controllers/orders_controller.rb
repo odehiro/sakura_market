@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :sign_in_required
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :admin_required, only: [:edit, :update, :destroy]
 
   def index
     if @current_user.admin?
@@ -10,8 +11,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  # GET /orders/1
-  # GET /orders/1.json
   def show
   end
 
@@ -45,7 +44,7 @@ class OrdersController < ApplicationController
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
 
-        format.html { redirect_to home_show_url, notice: 'ご注文ありがとうございます' }
+        format.html { redirect_to @order, notice: 'ご注文ありがとうございます' }
         format.json { render :show, status: :created, location: @order }
       else
         @cart = current_cart
