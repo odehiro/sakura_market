@@ -1,32 +1,42 @@
 - provide(:title, "商品一覧")
 
+-# %h1 商品一覧
+-# %table
+-#   %thead
+-#     %tr
+-#       %th 商品名
+-#       %th 商品画像
+-#       %th 価格
+-#       %th 商品説明
+-#       %th 表示
+-#       %th
+-#       %th 並び順
+-#       %th
+-#       %th
+-#       %th
+-#   %tbody
+-#     - @foods.order(:order).each do |food|
+-#       %tr
+-#         %td= food.name
+-#         %td= image_tag image_food_path(food)
+-#         %td= food.price
+-#         %td= food.caption
+-#         %td= food.display
+-#         %td= link_to 'カートに入れる', line_items_path(food_id: food), method: :post
+-#         %td= food.order
+-#         %td= link_to '表示', food
+-#         %td= link_to '編集', edit_food_path(food)
+-#         %td= link_to '削除', food, method: :delete, data: { confirm: '削除して宜しいですか？' }
+
 %h1 商品一覧
-%table
-  %thead
-    %tr
-      %th 商品名
-      %th 商品画像
-      %th 価格
-      %th 商品説明
-      %th 表示
-      %th
-      %th 並び順
-      %th
-      %th
-      %th
-  %tbody
-    - @foods.order(:order).each do |food|
-      %tr
-        %td= food.name
-        %td= image_tag image_food_path(food)
-        %td= food.price
-        %td= food.caption
-        %td= food.display
-        %td= link_to 'カートに入れる', line_items_path(food_id: food), method: :post
-        %td= food.order
-        %td= link_to '表示', food
-        %td= link_to '編集', edit_food_path(food)
-        %td= link_to '削除', food, method: :delete, data: { confirm: '削除して宜しいですか？' }
+.row.row-flex.row-flex-wrap
+  - @foods.each do |food|
+    .col-md-4
+      .panel.panel-primary
+        .panel-body{ style: "height: 300px;"}
+          = link_to image_tag(image_food_path(food), class: 'img-thumbnail', style: "max-height: 250px;"), food_path(food)
+        .panel-footer
+          = link_to food.name, food_path(food)
 %br
 - if current_user.admin?
   = link_to '新規登録', new_food_path
