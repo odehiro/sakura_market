@@ -1,4 +1,7 @@
-%header.navbar.navbar-fixed-top.navbar-default
+- classname = "navbar-default"
+- if user_signed_in?
+  - classname = "navbar-admin" if current_user.admin?
+%header.navbar.navbar-fixed-top{ class: "#{ classname }" }
   .navbar-header
     = link_to "さくらマーケット", root_path, class: "navbar-brand", id: "logo"
   .navbar-inner

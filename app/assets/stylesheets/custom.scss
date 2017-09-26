@@ -33,7 +33,16 @@ textarea {
     color: #ffffff;
   }
 }
-
+.navbar-admin {
+  background-color: #7ac843;
+  border-color: #FF0000;
+  .navbar-header > a {
+    color: #ffffff;
+  }
+  .navbar-nav > li > a {
+    color: #ffffff;
+  }
+}
 /* sidebar */
 aside {
   section.user_info {
