@@ -7,7 +7,7 @@
   = @food.name
 %p
   %b= t('activerecord.attributes.food.image')
-  = image_tag image_food_path(@food)
+  = image_tag image_food_path(@food), class: 'img-thumbnail', style: "max-height: 250px;"
 %p
   %b= t('activerecord.attributes.food.price')
   = @food.price
@@ -21,9 +21,11 @@
   %p
     %b= t('activerecord.attributes.food.order')
     = @food.order
-
-  = link_to '編　集', edit_food_path(@food)
-  \|
 = link_to 'カートに入れる', line_items_path(food_id: @food), method: :post
 \|
+- if current_user.admin?
+  = link_to '編　集', edit_food_path(@food)
+  \|
+  = link_to '削　除', @food, method: :delete, data: { confirm: '削除して宜しいですか？' }
+  \|
 = link_to '戻　る', foods_path
