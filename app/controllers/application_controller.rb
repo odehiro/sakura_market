@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   #before_action :authenticate_user!
   protect_from_forgery with: :exception
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   def after_sign_in_path_for(resource)
     home_show_path
@@ -13,6 +14,12 @@ class ApplicationController < ActionController::Base
   def admin_required
     redirect_to home_show_url unless current_user.admin?
   end
+
+  protected
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit :sign_up, keys: [:name]
+      devise_parameter_sanitizer.permit :account_update, keys: [:name]
+    end
 
   private
     def sign_in_required
