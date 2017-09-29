@@ -10,7 +10,7 @@
   = image_tag image_food_path(@food), class: 'img-thumbnail', style: "max-height: 250px;"
 %p
   %b= t('activerecord.attributes.food.price')
-  = @food.price
+  = number_to_currency(@food.price)
 - if current_user.admin?
   %p
     %b= t('activerecord.attributes.food.caption')
