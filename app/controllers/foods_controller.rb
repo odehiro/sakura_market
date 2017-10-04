@@ -4,7 +4,7 @@ class FoodsController < ApplicationController
   before_action :admin_required, only: [:new, :edit, :update, :destroy]
 
   def index
-    @foods = Food.all
+    @foods = Food.all.order(:order)
   end
 
   def show

@@ -31,7 +31,7 @@ RSpec.feature "Foods", type: :request do
       
       scenario "並び順はorderの昇順であること" do
         visit foods_path
-        expect(first('tbody tr')).to have_content food2.name
+        expect(first('.panel-footer')).to have_content food2.name
       end
     end
 
