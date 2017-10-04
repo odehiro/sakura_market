@@ -121,7 +121,7 @@ RSpec.feature "Foods", type: :request do
 
     feature "food#update" do
       given(:new_name) { "New Name" }
-      given(:new_price) { 1500 }
+      given(:new_price) { 500 }
       
       background do
         visit edit_food_path(food) 
