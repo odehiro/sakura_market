@@ -101,7 +101,7 @@ RSpec.feature "Foods", type: :request do
         is_expected.to have_field('価格', with: 200)
         is_expected.to have_field('商品説明', with: 'みずみずしい大根')
         is_expected.to have_checked_field('表示')
-        is_expected.to have_link "Show"
+        is_expected.to have_button "更　新"
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.feature "Foods", type: :request do
         is_expected.to have_field('価格', with: 200)
         is_expected.to have_field('商品説明', with: 'みずみずしい大根')
         is_expected.to have_checked_field('表示')
-        is_expected.to have_link "Show"
+        is_expected.to have_button "更　新"
       end
     end
 
@@ -144,14 +144,14 @@ RSpec.feature "Foods", type: :request do
     feature "food#delete" do
       background do
         food.reload
-        visit foods_path
+        visit food_path(food) 
       end
 
       context "削除対象がカートに入ってないとき" do
         scenario "指定項目が削除できること" do
           expect(page).to have_http_status(200) 
-          is_expected.to have_link "削除"
-          expect { click_link '削除', match: :first }.to change(Food, :count).by(-1)
+          is_expected.to have_link "削　除"
+          expect { click_link '削　除', match: :first }.to change(Food, :count).by(-1)
           expect(page).to have_content '商品を削除しました。'
           expect(current_path).to eq foods_path
         end
@@ -166,12 +166,12 @@ RSpec.feature "Foods", type: :request do
           food.reload
           cart.reload
           line.reload
-          visit foods_path
+          visit food_path(food) 
         end
 
         scenario "削除でエラーが出ること" do
-          is_expected.to have_link "削除"
-          expect { click_link '削除', match: :first }.not_to change(Food, :count)
+          is_expected.to have_link "削　除"
+          expect { click_link '削　除', match: :first }.not_to change(Food, :count)
           expect(page).to have_content '品目が存在します'
           expect(current_path).to eq foods_path
         end
