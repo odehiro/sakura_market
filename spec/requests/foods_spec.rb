@@ -35,7 +35,7 @@ RSpec.feature "Foods", type: :request do
       end
     end
 
-    feature "food#show" do
+    feature "#show" do
       background { visit food_path(food) }
 
       scenario "商品が表示されること" do
@@ -43,7 +43,7 @@ RSpec.feature "Foods", type: :request do
       end
     end
 
-    feature "food#new" do
+    feature "#new" do
       scenario "権限がないたトップページに遷移すること" do
         visit new_food_path
         expect(current_path).to eq home_show_path
@@ -61,14 +61,14 @@ RSpec.feature "Foods", type: :request do
       click_button 'ログイン'
     end
     
-    feature "food#index" do
+    feature "#index" do
       scenario "商品一覧画面へ遷移すること" do
         visit foods_path
         expect(page).to have_http_status(:success)
       end
     end
 
-    feature "food#show" do
+    feature "#show" do
       background { visit food_path(food) }
 
       scenario "商品が表示されること" do
@@ -76,7 +76,7 @@ RSpec.feature "Foods", type: :request do
       end
     end
 
-    feature "food#new/create" do
+    feature "#new/create" do
       scenario "生鮮食品登録" do
         visit new_food_path
         expect(page).to have_http_status(200)
@@ -92,7 +92,7 @@ RSpec.feature "Foods", type: :request do
       end
     end
 
-    feature "food#edit/update" do
+    feature "#edit/update" do
       background { visit edit_food_path(food) }
 
       scenario "表示項目" do
@@ -105,7 +105,7 @@ RSpec.feature "Foods", type: :request do
       end
     end
 
-    feature "food#edit/update" do
+    feature "#edit/update" do
       background { visit edit_food_path(food) }
 
       scenario "表示項目" do
@@ -119,7 +119,7 @@ RSpec.feature "Foods", type: :request do
       end
     end
 
-    feature "food#update" do
+    feature "#update" do
       given(:new_name) { "New Name" }
       given(:new_price) { 500 }
       
@@ -141,7 +141,7 @@ RSpec.feature "Foods", type: :request do
       end
     end
 
-    feature "food#delete" do
+    feature "#delete" do
       background do
         food.reload
         visit food_path(food) 
