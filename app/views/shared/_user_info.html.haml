@@ -1,4 +1,6 @@
-=link_to gravatar_for(current_user, size: 50), current_user
-%h1= current_user.name
-%span= link_to "プロフィール画面へ", current_user
-%span= link_to "購入履歴", orders_path
+=link_to gravatar_for(current_user, size: 70), current_user
+%span{style: "display: inline;"}= current_user.name
+%br
+%h5= link_to "プロフィール画面を編集する", current_user
+%h5= link_to "配送先を編集する", current_user
+%h5= link_to "購入履歴", orders_path
