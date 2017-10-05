@@ -4,6 +4,7 @@ RSpec.feature "User pages", type: :request do
   subject { page }
   
   given(:user) { FactoryGirl.create(:user) }
+  given(:user2) { FactoryGirl.create(:user_to_empty) }
   given(:admin) { FactoryGirl.create(:admin) }
 
   context "一般ユーザーのとき" do
@@ -79,6 +80,7 @@ RSpec.feature "User pages", type: :request do
         is_expected.to have_content('パスワード')
         is_expected.to have_content('確認用パスワード')
         is_expected.to have_content('現在のパスワード')
+        is_expected.to have_content('送付先住所')
         is_expected.to have_button('Update')
         is_expected.to have_button('Cancel my account')
       end
@@ -102,11 +104,13 @@ RSpec.feature "User pages", type: :request do
       end
     
       scenario "住所が登録できること" do
+        test_to_address = '京都'
         fill_in '現在のパスワード', with: user.password
-        fill_in '住所', with: user.to_address
+        fill_in '住所', with: test_to_address
 
         expect { click_button 'Update' }.not_to change(User, :count)
         expect(page).to have_content 'アカウント情報を変更しました。'
+        expect(User.find(user).to_address).to eq test_to_address
       end
     end
 
