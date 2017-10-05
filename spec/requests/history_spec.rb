@@ -27,18 +27,19 @@ RSpec.feature "History", type: :request do
       fill_in 'メールアドレス', with: user.email
       fill_in 'パスワード', with: user.password
       click_button 'ログイン'
-      expect(current_path).to eq home_show_path
     end
     
     feature "order#show" do
       scenario '購入履歴画面へ遷移すること'do
+        click_link '日記を見る'
+        
         is_expected.to have_link '購入履歴'
-
         click_link '購入履歴'
         expect(current_path).to eq orders_path
       end
 
       scenario '自分の購入履歴一覧が表示されること' do
+        click_link '日記を見る'
         click_link '購入履歴'
 
         #save_and_open_page
@@ -50,6 +51,7 @@ RSpec.feature "History", type: :request do
       end
 
       scenario '各購入履歴の詳細が表示されること' do
+        click_link '日記を見る'
         click_link '購入履歴'
         first('tbody tr').click_link '注文詳細'
         expect(current_path).to eq order_path(order1.id)

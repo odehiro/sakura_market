@@ -9,8 +9,8 @@
       %nav
         - if user_signed_in?
           %ul.nav.navbar-nav.navbar-left
-            %li= link_to "日記を見る", '#'
-            %li= link_to "お買い物", home_show_path
+            %li= link_to "日記を見る", home_show_path
+            %li= link_to "お買い物", foods_path
             - if session[:cart_id]
               %li= link_to "ショッピングカート", cart_path(session[:cart_id])
             - if current_user.admin?
