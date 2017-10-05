@@ -21,6 +21,7 @@ RSpec.feature "Home/Devise", type: :request do
 
     scenario "サインインボタンクリック" do
       click_on "サインイン"
+      is_expected.to have_http_status(200)
       expect(current_path).to eq new_user_registration_path
     end
   end
