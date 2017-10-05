@@ -57,7 +57,7 @@ RSpec.feature "Home/Devise", type: :request do
 
         scenario "ログイン成功してトップページへ遷移していること" do
           is_expected.to have_http_status(:success)
-          expect(current_path).to eq home_show_path
+          expect(current_path).to eq foods_path
         end
 
         scenario "ヘッダリンクが表示されていること" do
@@ -74,6 +74,7 @@ RSpec.feature "Home/Devise", type: :request do
 
         scenario "商品一覧が表示されていること" do
           #save_and_open_page
+          expect(current_path).to eq foods_path
           is_expected.to have_link food.name
           #is_expected.to have_css("img[src='']")
           is_expected.not_to have_content food.price
@@ -104,7 +105,7 @@ RSpec.feature "Home/Devise", type: :request do
 
         scenario "ログイン成功してトップページへ遷移していること" do
           is_expected.to have_http_status(:success)
-          expect(current_path).to eq home_show_path
+          expect(current_path).to eq foods_path
         end
 
         scenario "管理者用のヘッダリンクが表示されていること" do

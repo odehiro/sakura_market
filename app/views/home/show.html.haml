@@ -6,14 +6,4 @@
       - if user_signed_in?
         = render 'shared/user_info'
   .col-md-9
-    %h2 商品一覧
-    .row.row-flex.row-flex-wrap
-      - @foods.each do |food|
-        .col-md-4
-          .thumbnail
-            = image_tag image_food_path(food)
-            .caption
-            = link_to food.name, food_path(food)
-
-  = link_to '新規登録', new_food_path
-
+    %h2 日記？

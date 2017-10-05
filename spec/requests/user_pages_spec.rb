@@ -39,7 +39,7 @@ RSpec.feature "User pages", type: :request do
         fill_in '確認用パスワード', with: user.password
         expect { click_button 'Sign up' }.to change(User, :count).by(1)
         expect(page).to have_content 'アカウント登録が完了しました。'
-        expect(current_path).to eq home_show_path
+        expect(current_path).to eq foods_path
         #save_and_open_page
         click_link 'ログアウト'
       end
