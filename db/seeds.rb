@@ -4,19 +4,24 @@ User.create(
   email: "user@example.com",
   password: "foobar",
   password_confirmation: "foobar"
+  to_address: "尼崎",
+  admin: false
 )
 User.create(
   name: "Administrator", 
   email: "admin@example.com",
   password: "foobar",
   password_confirmation: "foobar",
+  to_address: "京都",
   admin: true
 )
 User.create(
-  name: "西出 宏和", 
+  name: "nishide", 
   email: "nishide.h@gmail.com",
   password: "foobar",
   password_confirmation: "foobar",
+  to_name: "西出 宏和"
+  to_address: "尼崎",
   admin: true
 )
 
