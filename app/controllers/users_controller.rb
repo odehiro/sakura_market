@@ -2,18 +2,32 @@ class UsersController < ApplicationController
   before_action :sign_in_required
   before_action :set_user, only: [:show, :edit, :update]
   before_action :correct_user, only: [:show]
-  before_action :admin_required, only: [:index, :destroy]
+  before_action :admin_required, only: [:index, :edit, :destroy]
 
   def index
     @users = User.all
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def new
     @user = User.new
+  end
+
+  def edit
+  end
+  
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to @user, notice: 'アカウント情報を更新しました。' }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy

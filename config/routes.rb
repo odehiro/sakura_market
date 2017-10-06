@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {
     :registrations => 'users/registrations'
   }
-  resources :users
+  resources :users, only: [:index, :show, :edit, :update, :destroy]
   resources :foods do
     member { get :image }
   end
