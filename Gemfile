@@ -52,3 +52,7 @@ group :test do
   gem 'rails-controller-testing', require: false
   gem 'timecop'
 end
+
+group :production do
+  gem 'pg'
+end
