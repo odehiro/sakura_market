@@ -13,5 +13,10 @@
     %b 送付先住所:
     = @user.to_address
 = link_to '編　集', edit_user_registration_path(@user)
+  - if current_user.admin?
+    %p
+      %b 管理者権限:
+      = @user.admin
+
 |
-= link_to '戻　る', home_show_path
+= link_to '戻　る', :back

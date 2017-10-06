@@ -9,6 +9,7 @@ ja:
       user:
         name: 名前
         to_address: 送付先住所
+        admin: 管理者権限
       food:
         name: 商品名
         image: 商品画像
