@@ -110,7 +110,7 @@ RSpec.feature "User pages", type: :request do
 
         expect { click_button 'Update' }.not_to change(User, :count)
         expect(page).to have_content 'アカウント情報を変更しました。'
-        expect(User.find(user).to_address).to eq test_to_address
+        expect(User.find(user.id).to_address).to eq test_to_address
       end
     end
 

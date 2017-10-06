@@ -6,7 +6,7 @@ class CreateFoods < ActiveRecord::Migration[5.0]
       t.integer :price
       t.text :caption
       t.boolean :display
-      t.string :order
+      t.integer  :order_index
 
       t.timestamps
     end

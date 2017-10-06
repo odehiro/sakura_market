@@ -8,7 +8,7 @@ RSpec.describe Food, type: :model do
     is_expected.to respond_to(:price)
     is_expected.to respond_to(:caption)
     is_expected.to respond_to(:display)
-    is_expected.to respond_to(:order)
+    is_expected.to respond_to(:order_index)
   end
 
   before do
@@ -47,7 +47,7 @@ RSpec.describe Food, type: :model do
     
     it "並び順が自動採番されていること" do
       @food.save
-      expect(Food.find(@food.id).order).to eq Food.all.count
+      expect(Food.find(@food.id).order_index).to eq Food.all.count
 
       food2 = Food.create(name: "玄米",
                           image: "",
@@ -55,7 +55,7 @@ RSpec.describe Food, type: :model do
                           caption: "発芽すると栄養豊富",
                           display: true
                          )
-      expect(food2.order).to eq 2
+      expect(food2.order_index).to eq 2
     end
   end
 end

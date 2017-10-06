@@ -4,7 +4,7 @@ class FoodsController < ApplicationController
   before_action :admin_required, only: [:new, :edit, :update, :destroy]
 
   def index
-    @foods = Food.all.order(:order)
+    @foods = Food.all.order(:order_index)
   end
 
   def show
@@ -76,6 +76,6 @@ class FoodsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def food_params
-      params.require(:food).permit(:name, :price, :caption, :display, :order)
+      params.require(:food).permit(:name, :price, :caption, :display, :order_index)
     end
 end

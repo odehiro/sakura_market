@@ -1,5 +1,5 @@
 class Food < ApplicationRecord
-  before_create :add_order
+  before_create :add_order_index
   before_destroy :ensure_not_referenced_by_item
   
   has_many :line_items
@@ -16,14 +16,14 @@ class Food < ApplicationRecord
       end
     end
 
-    def add_order
-      if !self.order
+    def add_order_index
+      if !self.order_index
         if Food.all.count == 0
-          self.order = 1
+          self.order_index = 1
         else
-          max = Food.maximum(:order) 
+          max = Food.maximum(:order_index) 
           #debugger
-          self.order =  max + 1
+          self.order_index =  max + 1
         end
       end
     end

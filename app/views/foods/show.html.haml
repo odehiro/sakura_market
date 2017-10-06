@@ -16,8 +16,8 @@
     %b= t('activerecord.attributes.food.display')
     = @food.display
   %p
-    %b= t('activerecord.attributes.food.order')
-    = @food.order
+    %b= t('activerecord.attributes.food.order_index')
+    = @food.order_index
 = link_to 'カートに入れる', line_items_path(food_id: @food), method: :post
 \|
 - if current_user.admin?

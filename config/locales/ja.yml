@@ -16,4 +16,4 @@ ja:
         price: 価格
         caption: 商品説明
         display: 表示
-        order: 並び順
+        order_index: 並び順
