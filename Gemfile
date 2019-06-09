@@ -9,7 +9,7 @@ gem 'jquery-rails', '4.1.1'
 gem 'turbolinks', '5.0.1'
 gem 'jbuilder', '2.4.1'
 gem 'haml-rails'
-gem 'bootstrap-sass', '3.3.6'
+gem "bootstrap-sass", ">= 3.4.1"
 gem 'devise'
 gem 'devise-i18n'
 gem 'rails-i18n'
