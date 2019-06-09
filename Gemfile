@@ -31,7 +31,6 @@ group :development, :test do
   gem 'pry-stack_explorer'
 
   gem 'hirb'
-  gem 'hirb-unicode'
 end
 
 group :development do
@@ -41,7 +40,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'rubocop'
+  gem "rubocop"
 end
 
 group :test do
